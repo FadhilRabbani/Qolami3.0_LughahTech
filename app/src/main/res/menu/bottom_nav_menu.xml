@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Beranda"/>
+
+    <item
+        android:id="@+id/pelajaran"
+        android:icon="@drawable/baseline_backpack_24"
+        android:title="Pelajaran"/>
+    <item
+        android:id="@+id/latihan"
+        android:icon="@drawable/baseline_edit_24"
+        android:title="Latihan"/>
+    <item
+        android:id="@+id/Quiz"
+        android:icon="@drawable/baseline_menu_book_24"
+        android:title="Quiz"/>
+</menu>

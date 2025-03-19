@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/warna_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.latihan.FragmentHasilLatihanVideos">
+
+    <ImageView
+        android:id="@+id/iv_onboarding"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/char1"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_onboarding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Latihan Selesai!"
+        android:textColor="@color/warna_hijau_tua"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_onboarding" />
+
+    <Button
+        android:id="@+id/btn_lanjutkan"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/warna_hijau_tua"
+        android:text="Lanjutkan"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/montserrat_bold" />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="180dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="#73CA5C"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_onboarding"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="140dp">
+        <TextView
+            android:id="@+id/txt_benar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benar"
+            android:fontFamily="@font/nunito_extrabold"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white">
+        </TextView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="20dp"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:id="@+id/image_senyum"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/baseline_sentiment_very_satisfied_24_hijau" />
+            <TextView
+                android:id="@+id/nilai_benar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9"
+                android:fontFamily="@font/nunito_extrabold"
+                android:textColor="#73CA5C"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="90dp"
+                android:textSize="40sp">
+
+            </TextView>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="180dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="@color/merah"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_onboarding"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="140dp">
+        <TextView
+            android:id="@+id/txt_salah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salah"
+            android:fontFamily="@font/nunito_extrabold"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white">
+        </TextView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="20dp"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:id="@+id/image_manyun"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/baseline_sentiment_very_dissatisfied_24_merah" />
+
+            <TextView
+                android:id="@+id/nilai_salah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9"
+                android:fontFamily="@font/nunito_extrabold"
+                android:textColor="@color/merah"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="90dp"
+                android:textSize="40sp">
+
+            </TextView>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

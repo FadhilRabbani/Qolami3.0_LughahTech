@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tabGravity="center"
+        android:layout_marginTop="550dp"
+        app:tabIndicatorHeight="0dp"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        app:tabBackground="@drawable/ring"/>
+    <ImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="51dp"
+        android:layout_height="43dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/tabLayout"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/rounded_bg_buttom"
+        android:src="@drawable/baseline_navigate_next_24_putih"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/text_sudahjelas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btn_next"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Sudah Punya Akun?"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txt_masuk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/text_sudahjelas"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Masuk Disini"
+        android:textColor="@color/warna_hijau_tua" />
+
+
+</RelativeLayout>
