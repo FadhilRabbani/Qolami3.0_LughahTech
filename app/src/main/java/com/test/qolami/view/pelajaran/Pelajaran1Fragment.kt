@@ -13,6 +13,9 @@ import com.test.qolami.view.adapter.pelajaran.PelajaranHuruf1Adapter
 import com.test.qolami.view.adapter.pelajaran.PelajaranHuruf2Adapter
 import com.test.qolami.view.adapter.pelajaran.PelajaranHuruf3Adapter
 import com.test.qolami.view.adapter.pelajaran.PelajaranHuruf4Adapter
+import com.test.qolami.view.adapter.pelajaran.PelajaranHuruf5Adapter
+import com.test.qolami.view.adapter.pelajaran.PelajaranHuruf6Adapter
+import com.test.qolami.view.adapter.pelajaran.PelajaranHuruf7Adapter
 import com.test.qolami.view.pelajaran.data.DataAudioHijaiyaj
 import com.test.qolami.view.pelajaran.data.DataMenuPelajaran1Huruf
 import com.test.qolami.viewnodel.PelajaranHurufViewModel
@@ -26,6 +29,9 @@ class Pelajaran1Fragment : Fragment() {
     private lateinit var pelajaranHuruf2Adapter: PelajaranHuruf2Adapter
     private lateinit var pelajaranHuruf3Adapter: PelajaranHuruf3Adapter
     private lateinit var pelajaranHuruf4Adapter: PelajaranHuruf4Adapter
+    private lateinit var pelajaranHuruf5Adapter: PelajaranHuruf5Adapter
+    private lateinit var pelajaranHuruf6Adapter: PelajaranHuruf6Adapter
+    private lateinit var pelajaranHuruf7Adapter: PelajaranHuruf7Adapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,6 +63,15 @@ class Pelajaran1Fragment : Fragment() {
             }
             "Pelajaran 4" -> {
                 return rcLayoutHurufPelajaran4()
+            }
+            "Pelajaran 5" -> {
+                return rcLayoutHurufPelajaran5()
+            }
+            "Pelajaran 6" -> {
+                return rcLayoutHurufPelajaran6()
+            }
+            "Pelajaran 7" -> {
+                return rcLayoutHurufPelajaran7()
             }
         }
     }
@@ -101,7 +116,36 @@ class Pelajaran1Fragment : Fragment() {
             pelajaranHuruf4Adapter.listHurufDhammah = it as ArrayList<DataMenuPelajaran1Huruf>
         }
     }
-
+    private fun rcLayoutHurufPelajaran5(){
+        pelajaranHurufViewModel = ViewModelProvider(this)[PelajaranHurufViewModel::class.java]
+        pelajaranHuruf5Adapter = PelajaranHuruf5Adapter(ArrayList())
+        pelajaranHurufViewModel.getPelajaran5()
+        binding.rcCon.layoutManager = GridLayoutManager(context, 5)
+        binding.rcCon.adapter = pelajaranHuruf5Adapter
+        pelajaranHurufViewModel.getDataPelajaran5.observe(viewLifecycleOwner){
+            pelajaranHuruf5Adapter.listHurufFathahain = it as ArrayList<DataMenuPelajaran1Huruf>
+        }
+    }
+    private fun rcLayoutHurufPelajaran6(){
+        pelajaranHurufViewModel = ViewModelProvider(this)[PelajaranHurufViewModel::class.java]
+        pelajaranHuruf6Adapter = PelajaranHuruf6Adapter(ArrayList())
+        pelajaranHurufViewModel.getPelajaran6()
+        binding.rcCon.layoutManager = GridLayoutManager(context, 5)
+        binding.rcCon.adapter = pelajaranHuruf6Adapter
+        pelajaranHurufViewModel.getDataPelajaran6.observe(viewLifecycleOwner){
+            pelajaranHuruf6Adapter.listHurufKasrahtain = it as ArrayList<DataMenuPelajaran1Huruf>
+        }
+    }
+    private fun rcLayoutHurufPelajaran7(){
+        pelajaranHurufViewModel = ViewModelProvider(this)[PelajaranHurufViewModel::class.java]
+        pelajaranHuruf7Adapter = PelajaranHuruf7Adapter(ArrayList())
+        pelajaranHurufViewModel.getPelajaran7()
+        binding.rcCon.layoutManager = GridLayoutManager(context, 5)
+        binding.rcCon.adapter = pelajaranHuruf7Adapter
+        pelajaranHurufViewModel.getDataPelajaran7.observe(viewLifecycleOwner){
+            pelajaranHuruf7Adapter.listHurufDammahtain = it as ArrayList<DataMenuPelajaran1Huruf>
+        }
+    }
 
 
 }

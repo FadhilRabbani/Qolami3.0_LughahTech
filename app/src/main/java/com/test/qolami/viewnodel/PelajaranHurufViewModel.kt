@@ -11,10 +11,10 @@ class PelajaranHurufViewModel:ViewModel() {
         DataPelajaranHuruf(R.drawable.img_fathah, "Pelajaran 2","Huruf Berharakat Fathah"),
         DataPelajaranHuruf(R.drawable.img_kasroh, "Pelajaran 3","Huruf Berharakat Kasrah"),
         DataPelajaranHuruf(R.drawable.img_dhammah, "Pelajaran 4","Huruf Berharakat Dhammah"),
-        /*DataPelajaranHuruf(R.drawable.img_fathahtain, "Pelajaran 5","Huruf Berharakat Fathahtain"),
+        DataPelajaranHuruf(R.drawable.img_fathahtain, "Pelajaran 5","Huruf Berharakat Fathahtain"),
         DataPelajaranHuruf(R.drawable.img_kasrahtain, "Pelajaran 6","Huruf Berharakat Kasrahtain"),
         DataPelajaranHuruf(R.drawable.dhammahtain, "Pelajaran 7","Huruf Berharakat Dhammahtain"),
-        DataPelajaranHuruf(R.drawable.img_sukun, "Pelajaran 8","Huruf Berharakat Sukun"),
+        /*DataPelajaranHuruf(R.drawable.img_sukun, "Pelajaran 8","Huruf Berharakat Sukun"),
         DataPelajaranHuruf(R.drawable.img_tasyjid, "Pelajaran 9","Huruf Berharakat Tasydid")*/
     )
     val getDataHuruf : MutableLiveData<List<DataPelajaranHuruf>> = MutableLiveData()
@@ -26,10 +26,10 @@ class PelajaranHurufViewModel:ViewModel() {
         DataPelajaranHurufDetail("Pelajaran 2", R.drawable.img_fathah, "Pelajaran 2", "Huruf Berharakat Fathah", "Pelajari penggunaan harakat Fathah pada kata, frasa, dan konsep tata bahasa"),
         DataPelajaranHurufDetail("Pelajaran 3", R.drawable.img_kasroh, "Pelajaran 3", "Huruf Berharakat Kasrah", "Pelajari penggunaan harakat Kasrah pada kata, frasa, dan konsep tata bahasa"),
         DataPelajaranHurufDetail("Pelajaran 4", R.drawable.img_dhammah, "Pelajaran 4", "Huruf Berharakat Dhammah", "Pelajari penggunaan harakat Dhammah pada kata, frasa, dan konsep tata bahasa"),
-        /*DataPelajaranHurufDetail("Pelajaran 5", R.drawable.img_fathahtain, "Pelajaran 5", "Huruf Berharakat Fathatain", "Pelajari penggunaan harakat Fathahtain pada kata, frasa, dan konsep tata bahasa"),
+        DataPelajaranHurufDetail("Pelajaran 5", R.drawable.img_fathahtain, "Pelajaran 5", "Huruf Berharakat Fathatain", "Pelajari penggunaan harakat Fathahtain pada kata, frasa, dan konsep tata bahasa"),
         DataPelajaranHurufDetail("Pelajaran 6", R.drawable.img_kasrahtain, "Pelajaran 6", "Huruf Berharakat Kasratain", "Pelajari penggunaan harakat Kasrahtain pada kata, frasa, dan konsep tata bahasa"),
         DataPelajaranHurufDetail("Pelajaran 7", R.drawable.dhammahtain, "Pelajaran 7", "Huruf Berharakat Dhammatain", "Pelajari penggunaan harakat Dhammahtain pada kata, frasa, dan konsep tata bahasa"),
-        DataPelajaranHurufDetail("Pelajaran 8", R.drawable.img_sukun, "Pelajaran 8", "Huruf Berharakat Sukun", "Pelajari penggunaan harakat Sukun pada kata, frasa, dan konsep tata bahasa"),
+        /*DataPelajaranHurufDetail("Pelajaran 8", R.drawable.img_sukun, "Pelajaran 8", "Huruf Berharakat Sukun", "Pelajari penggunaan harakat Sukun pada kata, frasa, dan konsep tata bahasa"),
         DataPelajaranHurufDetail("Pelajaran 9", R.drawable.img_tasyjid, "Pelajaran 9", "Huruf Berharakat Tasydid/ Syiddah", "Pelajari penggunaan harakat Taydid / Syiddah pada kata, frasa, dan konsep tata bahasa")*/
     )
     val getDataHurufDetail : MutableLiveData<List<DataPelajaranHurufDetail>> = MutableLiveData()
@@ -139,6 +139,108 @@ class PelajaranHurufViewModel:ViewModel() {
     val getDataPelajaran4 : MutableLiveData<List<DataMenuPelajaran1Huruf>> = MutableLiveData()
     fun getPelajaran4 (){
         getDataPelajaran4.value = listDataMenuPelajaran4
+    }
+    val listDataMenuPelajaran5 = arrayListOf(
+        DataMenuPelajaran1Huruf(1,R.drawable.alif_fathahain),
+        DataMenuPelajaran1Huruf(2,R.drawable.ba_fathahain),
+        DataMenuPelajaran1Huruf(3,R.drawable.ta_fathahain),
+        DataMenuPelajaran1Huruf(4,R.drawable.tsa_fathahain),
+        DataMenuPelajaran1Huruf(5,R.drawable.jim_fathahain),
+        DataMenuPelajaran1Huruf(6,R.drawable.ha_fathahain),
+        DataMenuPelajaran1Huruf(7,R.drawable.kha_fathahain),
+        DataMenuPelajaran1Huruf(8,R.drawable.dal_fathahain),
+        DataMenuPelajaran1Huruf(9,R.drawable.dzal_fathahain),
+        DataMenuPelajaran1Huruf(10,R.drawable.ro_fathahain),
+        DataMenuPelajaran1Huruf(11,R.drawable.zal_fathahain),
+        DataMenuPelajaran1Huruf(12,R.drawable.shin_fathahain),
+        DataMenuPelajaran1Huruf(13,R.drawable.syin_fathahain),
+        DataMenuPelajaran1Huruf(14,R.drawable.shod_fathahain),
+        DataMenuPelajaran1Huruf(15,R.drawable.dhod_fathahain),
+        DataMenuPelajaran1Huruf(16,R.drawable.to_fathahain),
+        DataMenuPelajaran1Huruf(17,R.drawable.dzo_fathahain),
+        DataMenuPelajaran1Huruf(18,R.drawable.ain_fathahain),
+        DataMenuPelajaran1Huruf(19,R.drawable.ghain_fathahain),
+        DataMenuPelajaran1Huruf(20,R.drawable.fa_fathahain),
+        DataMenuPelajaran1Huruf(21,R.drawable.qof_fathahain),
+        DataMenuPelajaran1Huruf(22,R.drawable.kam_fathahain),
+        DataMenuPelajaran1Huruf(23,R.drawable.lam_fathahain),
+        DataMenuPelajaran1Huruf(24,R.drawable.mim_fathahain),
+        DataMenuPelajaran1Huruf(25,R.drawable.nin_fathahain),
+        DataMenuPelajaran1Huruf(26,R.drawable.wau_fathahain),
+        DataMenuPelajaran1Huruf(27,R.drawable.hamza_fathahain),
+        DataMenuPelajaran1Huruf(28,R.drawable.ya_fathahain),
+    )
+    val getDataPelajaran5 : MutableLiveData<List<DataMenuPelajaran1Huruf>> = MutableLiveData()
+    fun getPelajaran5 (){
+        getDataPelajaran5.value = listDataMenuPelajaran5
+    }
+    val listDataMenuPelajaran6 = arrayListOf(
+        DataMenuPelajaran1Huruf(1,R.drawable.alif_kasrahtain),
+        DataMenuPelajaran1Huruf(2,R.drawable.ba_kasrahtain),
+        DataMenuPelajaran1Huruf(3,R.drawable.ta_kasrahtain),
+        DataMenuPelajaran1Huruf(4,R.drawable.tsa_kasrahtain),
+        DataMenuPelajaran1Huruf(5,R.drawable.jim_kasrahtain),
+        DataMenuPelajaran1Huruf(6,R.drawable.ha_kasrahtain),
+        DataMenuPelajaran1Huruf(7,R.drawable.kha_kasrahtain),
+        DataMenuPelajaran1Huruf(8,R.drawable.dal_kasrahtain),
+        DataMenuPelajaran1Huruf(9,R.drawable.dzal_kasrahtain),
+        DataMenuPelajaran1Huruf(10,R.drawable.ra_kasrahtain),
+        DataMenuPelajaran1Huruf(11,R.drawable.zal_kasrahtain),
+        DataMenuPelajaran1Huruf(12,R.drawable.shin_kasrahtain),
+        DataMenuPelajaran1Huruf(13,R.drawable.syin_kasrahtain),
+        DataMenuPelajaran1Huruf(14,R.drawable.shod_kasrahtain),
+        DataMenuPelajaran1Huruf(15,R.drawable.dhod_kasrahtain),
+        DataMenuPelajaran1Huruf(16,R.drawable.tho_kasrahtain),
+        DataMenuPelajaran1Huruf(17,R.drawable.dzo_kasrahtain),
+        DataMenuPelajaran1Huruf(18,R.drawable.ain_kasrahtain),
+        DataMenuPelajaran1Huruf(19,R.drawable.ghain_kasrahtain),
+        DataMenuPelajaran1Huruf(20,R.drawable.fa_kasrahtain),
+        DataMenuPelajaran1Huruf(21,R.drawable.qof_kasrahtain),
+        DataMenuPelajaran1Huruf(22,R.drawable.kam_kasrahtain),
+        DataMenuPelajaran1Huruf(23,R.drawable.lam_kasrahtain),
+        DataMenuPelajaran1Huruf(24,R.drawable.mim_kasrahtain),
+        DataMenuPelajaran1Huruf(25,R.drawable.nun_kasrahtain),
+        DataMenuPelajaran1Huruf(26,R.drawable.wau_kasrahtain),
+        DataMenuPelajaran1Huruf(27,R.drawable.hamza_kasrahtain),
+        DataMenuPelajaran1Huruf(28,R.drawable.ya_kasrahtain),
+    )
+    val getDataPelajaran6 : MutableLiveData<List<DataMenuPelajaran1Huruf>> = MutableLiveData()
+    fun getPelajaran6 (){
+        getDataPelajaran6.value = listDataMenuPelajaran6
+    }
+    val listDataMenuPelajaran7 = arrayListOf(
+        DataMenuPelajaran1Huruf(1,R.drawable.alif_dammahtain),
+        DataMenuPelajaran1Huruf(2,R.drawable.ba_dammahtain),
+        DataMenuPelajaran1Huruf(3,R.drawable.ta_dammahtain),
+        DataMenuPelajaran1Huruf(4,R.drawable.tsa_dammahtain),
+        DataMenuPelajaran1Huruf(5,R.drawable.jim_dammahtain),
+        DataMenuPelajaran1Huruf(6,R.drawable.ha_dammahtain),
+        DataMenuPelajaran1Huruf(7,R.drawable.kha_kasrahtain),
+        DataMenuPelajaran1Huruf(8,R.drawable.dal_dammahtain),
+        DataMenuPelajaran1Huruf(9,R.drawable.dzal_dammahtain),
+        DataMenuPelajaran1Huruf(10,R.drawable.ro_dammahtain),
+        DataMenuPelajaran1Huruf(11,R.drawable.zal_kasrahtain),
+        DataMenuPelajaran1Huruf(12,R.drawable.shin_dammahtain),
+        DataMenuPelajaran1Huruf(13,R.drawable.syin_dammahtain),
+        DataMenuPelajaran1Huruf(14,R.drawable.shod_dammahtain),
+        DataMenuPelajaran1Huruf(15,R.drawable.dhod_dammahtain),
+        DataMenuPelajaran1Huruf(16,R.drawable.thot_dammahtain),
+        DataMenuPelajaran1Huruf(17,R.drawable.dzo_dammahtain),
+        DataMenuPelajaran1Huruf(18,R.drawable.ain_dammahtain),
+        DataMenuPelajaran1Huruf(19,R.drawable.gain_dammahtain),
+        DataMenuPelajaran1Huruf(20,R.drawable.fa_dammahtain),
+        DataMenuPelajaran1Huruf(21,R.drawable.qaf_dammahtain),
+        DataMenuPelajaran1Huruf(22,R.drawable.kam_dammahtain),
+        DataMenuPelajaran1Huruf(23,R.drawable.lam_dammahtain),
+        DataMenuPelajaran1Huruf(24,R.drawable.mim_dammahtain),
+        DataMenuPelajaran1Huruf(25,R.drawable.nun_dammahtain),
+        DataMenuPelajaran1Huruf(26,R.drawable.wau_dammahtain),
+        DataMenuPelajaran1Huruf(27,R.drawable.hamza_dammahtain),
+        DataMenuPelajaran1Huruf(28,R.drawable.ya_dammahtain),
+    )
+    val getDataPelajaran7: MutableLiveData<List<DataMenuPelajaran1Huruf>> = MutableLiveData()
+    fun getPelajaran7 (){
+        getDataPelajaran7.value = listDataMenuPelajaran7
     }
     val hurufListHijaiyah = arrayListOf (
         DataAudioHijaiyaj(1, R.drawable.h_alif,    R.raw.sound1),
