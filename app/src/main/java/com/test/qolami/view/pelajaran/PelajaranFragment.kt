@@ -33,8 +33,7 @@ class PelajaranFragment : Fragment() {
             findNavController().navigate(R.id.action_pelajaranFragment_to_pelajaranHurufFragment)
         }
         binding.btnKata.setOnClickListener {
-            val popUpFiturFragment = PopUpFiturSedangDikembankanFragment()
-            popUpFiturFragment.show(childFragmentManager, "popupfitur")
+            findNavController().navigate(R.id.action_pelajaranFragment_to_pelajaranKataFragment)
         }
         binding.btnRangkaian.setOnClickListener {
             val popUpFiturFragment = PopUpFiturSedangDikembankanFragment()

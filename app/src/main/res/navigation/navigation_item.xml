@@ -102,6 +102,9 @@
             android:id="@+id/action_pelajaranFragment_to_pelajaranHurufFragment"
             app:destination="@id/pelajaranHurufFragment" />
         <action
+            android:id="@+id/action_pelajaranFragment_to_pelajaranKataFragment"
+            app:destination="@id/fragmentPelajaranKata" />
+        <action
             android:id="@+id/action_pelajaranFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
@@ -311,5 +314,12 @@
             app:destination="@id/fragmentDetailLatihanHuruf"
             app:popUpTo="@id/fragmentHasilLatihanAudio"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPelajaranKata"
+        android:name="com.test.qolami.view.pelajaran.PelajaranKataFragment"
+        android:label="fragment_pelajaran_kata">
+
+
     </fragment>
 </navigation>
