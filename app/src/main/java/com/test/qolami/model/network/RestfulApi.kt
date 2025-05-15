@@ -9,6 +9,15 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface RestfulApi {
+    interface ApiService {
+        @POST("register")
+        fun postRegister(@Body request: RegisterRequest): Call<RegisterResponse>
+
+//        @POST("login")
+//        fun loginUser(@Body request: LoginRequest): Call<LoginResponse>
+    }
+
+
     @POST("auth/register")
     fun postRegister(@Body request: Data): Call<NewUser>
 
