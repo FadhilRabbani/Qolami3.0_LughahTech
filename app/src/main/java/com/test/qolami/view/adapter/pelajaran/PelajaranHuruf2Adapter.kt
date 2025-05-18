@@ -41,7 +41,7 @@ class PelajaranHuruf2Adapter( var listHurufFathah: ArrayList<DataMenuPelajaran1H
             val bundle = Bundle()
             bundle.putInt("id2", listHurufFathah[position].id)
             bundle.putString("judul", "Pelajaran 2")
-            it.findNavController().navigate(R.id.action_pelajaran1Fragment_to_videoPembelajaranFragment, bundle)
+            it.findNavController().navigate(R.id.videoPembelajaranFragment, bundle)
         }
     }
 }

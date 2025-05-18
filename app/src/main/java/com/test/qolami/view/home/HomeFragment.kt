@@ -15,14 +15,14 @@ import com.test.qolami.databinding.FragmentHomeBinding
 import com.test.qolami.view.account.PopUpAkunFragment
 import com.test.qolami.view.home.PopUpFiturSedangDikembankanFragment
 import com.test.qolami.view.home.PopUpFragment
-import com.test.qolami.viewnodel.UserViewModel
+//import com.test.qolami.viewnodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var userViewModel: UserViewModel
+//    private lateinit var userViewModel: UserViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireContext().getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
-        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+//        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         val getToken = sharedPreferences.getString("token", "")
         if (getToken!!.isNotEmpty()) {
             val getUsername = sharedPreferences.getString("name", "")

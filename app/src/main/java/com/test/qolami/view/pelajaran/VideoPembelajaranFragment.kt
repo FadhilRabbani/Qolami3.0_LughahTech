@@ -5,8 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.common.Player
+
+
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
@@ -15,8 +22,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.test.qolami.R
 import com.test.qolami.databinding.FragmentVideoPembelajaranBinding
+import com.test.qolami.model.network.RetrofitClient
 import com.test.qolami.viewnodel.PelajaranHurufViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @Suppress("DEPRECATION")
@@ -25,6 +34,7 @@ class VideoPembelajaranFragment : Fragment() {
     private lateinit var binding: FragmentVideoPembelajaranBinding
     private lateinit var pelajaranHurufViewModel: PelajaranHurufViewModel
     private lateinit var youTubePlayerView: YouTubePlayerView
+    private lateinit var exoPlayer: ExoPlayer
     private var youTubePlayer: YouTubePlayer? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +51,7 @@ class VideoPembelajaranFragment : Fragment() {
             findNavController().navigateUp()
         }
         pelajaranHurufViewModel = ViewModelProvider(this).get(PelajaranHurufViewModel::class.java)
-        youTubePlayerView = binding.ytPlayer
+//        youTubePlayerView = binding.ytPlayer
         val getJudul = this.arguments?.get("judul")
         binding.textPelajaran.text = getJudul.toString()
         when (binding.textPelajaran.text.toString()) {
@@ -57,36 +67,73 @@ class VideoPembelajaranFragment : Fragment() {
         }
 
     }
+    private fun playVideoFromUrl(videoUrl: String) {
+        exoPlayer = ExoPlayer.Builder(requireContext()).build()
+        binding.playerView!!.player = exoPlayer
+        val mediaItem = MediaItem.fromUri(videoUrl)
+        exoPlayer.setMediaItem(mediaItem)
+        exoPlayer.repeatMode = Player.REPEAT_MODE_ONE  // <-- loop video terus
+        exoPlayer.prepare()
+        exoPlayer.playWhenReady
+    }
 
     private fun ytPlayer2(){
         val getId2 = this.arguments?.get("id2")
-        val data2 = pelajaranHurufViewModel.hurufListFathah
-        for(i in data2.indices) {
-            var getDataId2 = data2[i].id
-            if(getDataId2 == getId2){
-                binding.textJudul.text = data2[i].pelajaran
-                youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
-                    override fun onReady(player: YouTubePlayer) {
-                        youTubePlayer = player
-                        player.cueVideo(data2[i].idYoutube, 0f)
+        lifecycleScope.launch {
+            try {
+                val data = RetrofitClient.apiService.getPelajaran() // dapetin list dari API
+
+                // cari berdasarkan ID
+                val selectedData = data.find { it.id == getId2 }
+
+                selectedData?.let { item ->
+                    binding.textJudul.text = item.judul
+                    playVideoFromUrl(item.video_url)
+
+                    exoPlayer.addListener(object : Player.Listener {
+                        override fun onIsPlayingChanged(isPlaying: Boolean) {
+                            binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
+                        }
+                    })
+
+                    binding.btnPly.setOnClickListener {
+                        exoPlayer.play()
+                        it.visibility = View.INVISIBLE
                     }
 
-                    override fun onStateChange(
-                        youTubePlayer: YouTubePlayer,
-                        state: PlayerConstants.PlayerState
-                    ) {
-                        if (state == PlayerConstants.PlayerState.ENDED)
-                            binding.btnPly.visibility= View.VISIBLE
-                    }
-                })
-                binding.btnPly.setOnClickListener {
-                    youTubePlayer?.play()
-                    binding.btnPly.visibility = View.INVISIBLE
+                    binding.detail.text = item.deskripsi
+                    Glide.with(requireContext()).load(item.gambar_url).into(binding.gambarPelajaran)
                 }
-                binding.detail.text = data2[i].detail
-                Glide.with(this).load(data2[i].gambar).into(binding.gambarPelajaran)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(requireContext(), "Gagal memuat data", Toast.LENGTH_SHORT).show()
             }
         }
+//        val data2 = pelajaranHurufViewModel.hurufListFathahtain
+//        for(i in data2.indices) {
+//            var getDataId2 = data2[i].id
+//            if(getDataId2 == getId2){
+//                binding.textJudul.text = data2[i].pelajaran
+//                playVideoFromUrl(data2[i].videoUrl)
+//                exoPlayer.addListener(object : Player.Listener {
+//                    override fun onIsPlayingChanged(isPlaying: Boolean) {
+//                        if (isPlaying) {
+//                            binding.btnPly.visibility = View.INVISIBLE
+//                        } else {
+//                            binding.btnPly.visibility = View.VISIBLE
+//                        }
+//                    }
+//                })
+//                binding.btnPly.setOnClickListener {
+//                    exoPlayer.play()
+//                    it.visibility = View.INVISIBLE
+//                }
+//
+//                binding.detail.text = data2[i].detail
+//                Glide.with(this).load(data2[i].gambar).into(binding.gambarPelajaran)
+//            }
+//        }
 
     }
     private fun ytPlayer3(){
@@ -150,6 +197,12 @@ class VideoPembelajaranFragment : Fragment() {
             }
         }
 
+    }
+    override fun onStop() {
+        super.onStop()
+        if (::exoPlayer.isInitialized) {
+            exoPlayer.release()
+        }
     }
 
 

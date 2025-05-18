@@ -26,22 +26,22 @@ class DialogFragmentJawaban : BottomSheetDialogFragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val jawabanBenar = (requireParentFragment() as FragmentSoalLatihanImage).checkJawaban()
-        if (jawabanBenar == false){
-            view.findViewById<LinearLayout>(R.id.id_lyt).setBackgroundColor(resources.getColor(R.color.merah))
-            view.findViewById<ImageView>(R.id.img_emot).setImageResource(R.drawable.baseline_sentiment_very_dissatisfied_24)
-            view.findViewById<TextView>(R.id.txt_detail).text = "Salah!"
-            view.findViewById<Button>(R.id.button_lanjutkan_soal).setTextColor(resources.getColor(R.color.merah))
-        }
-        view.findViewById<Button>(R.id.button_lanjutkan_soal).setOnClickListener {
-            val lanjutkanSoal = (requireParentFragment() as FragmentSoalLatihanImage).lanjutkanSoal()
-            lanjutkanSoal
-            dismiss()
-        }
-
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        val jawabanBenar = (requireParentFragment() as FragmentSoalLatihanImage).checkJawaban()
+//        if (jawabanBenar == false){
+//            view.findViewById<LinearLayout>(R.id.id_lyt).setBackgroundColor(resources.getColor(R.color.merah))
+//            view.findViewById<ImageView>(R.id.img_emot).setImageResource(R.drawable.baseline_sentiment_very_dissatisfied_24)
+//            view.findViewById<TextView>(R.id.txt_detail).text = "Salah!"
+//            view.findViewById<Button>(R.id.button_lanjutkan_soal).setTextColor(resources.getColor(R.color.merah))
+//        }
+//        view.findViewById<Button>(R.id.button_lanjutkan_soal).setOnClickListener {
+//            val lanjutkanSoal = (requireParentFragment() as FragmentSoalLatihanImage).lanjutkanSoal()
+//            lanjutkanSoal
+//            dismiss()
+//        }
+//
+//    }
 
 
 

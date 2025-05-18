@@ -23,7 +23,7 @@ import com.test.qolami.view.account.PopUpAkunFragment
 import com.test.qolami.view.home.PopUpFiturSedangDikembankanFragment
 import com.test.qolami.view.home.PopUpFragment
 import com.test.qolami.view.home.PopUpPelajaranFragment
-import com.test.qolami.view.latihan.FragmentLatihan
+//import com.test.qolami.view.latihan.FragmentLatihan
 import com.test.qolami.view.pelajaran.PelajaranFragment
 import dagger.hilt.android.AndroidEntryPoint
 

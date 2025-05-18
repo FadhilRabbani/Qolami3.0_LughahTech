@@ -15,29 +15,37 @@ import com.test.qolami.BuildConfig
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitClient {
-    private const val  BASE_URL = BuildConfig.BASE_URL
+    private const val BASE_URL = "http://127.0.0.1:8000/api/"
 
-    private val logging : HttpLoggingInterceptor
-        get() {
-            val httpLoggingInterceptor = HttpLoggingInterceptor()
-            return httpLoggingInterceptor.apply {
-                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            }
-        }
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-
-    private val client = OkHttpClient.Builder().addInterceptor(logging).build()
-    @Singleton
-    @Provides
-    fun provideRetrofit() : Retrofit =
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
-
-    @Singleton
-    @Provides
-    fun provideFilmApi(retrofit: Retrofit): RestfulApi =
-        retrofit.create(RestfulApi::class.java)
+    val apiService: RestfulApi.ApiService = retrofit.create(RestfulApi.ApiService::class.java)
+//    private const val  BASE_URL = BuildConfig.BASE_URL
+//
+//    private val logging : HttpLoggingInterceptor
+//        get() {
+//            val httpLoggingInterceptor = HttpLoggingInterceptor()
+//            return httpLoggingInterceptor.apply {
+//                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+//            }
+//        }
+//
+//
+//    private val client = OkHttpClient.Builder().addInterceptor(logging).build()
+//    @Singleton
+//    @Provides
+//    fun provideRetrofit() : Retrofit =
+//        Retrofit.Builder()
+//            .baseUrl(BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .client(client)
+//            .build()
+//
+//    @Singleton
+//    @Provides
+//    fun provideFilmApi(retrofit: Retrofit): RestfulApi =
+//        retrofit.create(RestfulApi::class.java)
 }
