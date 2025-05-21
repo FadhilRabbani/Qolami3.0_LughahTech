@@ -15,14 +15,25 @@ import com.test.qolami.BuildConfig
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitClient {
-    private const val BASE_URL = "http://127.0.0.1:8000/api/"
+    private const val BASE_URL = "http://192.168.1.12:8000/api/"
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
         .build()
 
-    val apiService: RestfulApi.ApiService = retrofit.create(RestfulApi.ApiService::class.java)
+    val instance: RestfulApi.ApiService by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        retrofit.create(RestfulApi.ApiService::class.java)
+
+
 //    private const val  BASE_URL = BuildConfig.BASE_URL
 //
 //    private val logging : HttpLoggingInterceptor
@@ -48,4 +59,4 @@ object RetrofitClient {
 //    @Provides
 //    fun provideFilmApi(retrofit: Retrofit): RestfulApi =
 //        retrofit.create(RestfulApi::class.java)
-}
+}}

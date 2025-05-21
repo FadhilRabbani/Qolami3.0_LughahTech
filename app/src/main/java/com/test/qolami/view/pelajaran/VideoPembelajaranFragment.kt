@@ -1,6 +1,7 @@
 package com.test.qolami.view.pelajaran
 
 import android.os.Bundle
+import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
@@ -23,9 +24,13 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.test.qolami.R
 import com.test.qolami.databinding.FragmentVideoPembelajaranBinding
 import com.test.qolami.model.network.RetrofitClient
+import com.test.qolami.view.pelajaran.data.IsiPelajaran
 import com.test.qolami.viewnodel.PelajaranHurufViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 @Suppress("DEPRECATION")
@@ -69,7 +74,7 @@ class VideoPembelajaranFragment : Fragment() {
     }
     private fun playVideoFromUrl(videoUrl: String) {
         exoPlayer = ExoPlayer.Builder(requireContext()).build()
-        binding.playerView!!.player = exoPlayer
+        binding.playerView?.player = exoPlayer
         val mediaItem = MediaItem.fromUri(videoUrl)
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.repeatMode = Player.REPEAT_MODE_ONE  // <-- loop video terus
@@ -77,39 +82,101 @@ class VideoPembelajaranFragment : Fragment() {
         exoPlayer.playWhenReady
     }
 
-    private fun ytPlayer2(){
-        val getId2 = this.arguments?.get("id2")
-        lifecycleScope.launch {
-            try {
-                val data = RetrofitClient.apiService.getPelajaran() // dapetin list dari API
-
-                // cari berdasarkan ID
-                val selectedData = data.find { it.id == getId2 }
-
-                selectedData?.let { item ->
-                    binding.textJudul.text = item.judul
-                    playVideoFromUrl(item.video_url)
-
-                    exoPlayer.addListener(object : Player.Listener {
-                        override fun onIsPlayingChanged(isPlaying: Boolean) {
-                            binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
-                        }
-                    })
-
-                    binding.btnPly.setOnClickListener {
-                        exoPlayer.play()
-                        it.visibility = View.INVISIBLE
-                    }
-
-                    binding.detail.text = item.deskripsi
-                    Glide.with(requireContext()).load(item.gambar_url).into(binding.gambarPelajaran)
-                }
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(requireContext(), "Gagal memuat data", Toast.LENGTH_SHORT).show()
-            }
+    private fun ytPlayer2() {
+        val getId2 = arguments?.getInt("id2") ?: run {
+            Toast.makeText(requireContext(), "ID pelajaran tidak ditemukan", Toast.LENGTH_SHORT)
+                .show()
+            return
         }
+        RetrofitClient.instance.getPelajaran(2, getId2).enqueue(object : Callback<IsiPelajaran> {
+            override fun onResponse(call: Call<IsiPelajaran>, response: Response <IsiPelajaran>) {
+                if (response.isSuccessful) {
+                    val item = response.body()
+                    item?.let {
+                        binding.textJudul.text = it.huruf_kata_rangkaian
+                        if (binding.playerView == null) {
+                            Log.e("VideoFragment", "playerView is null")
+                            return
+                        }else{
+                            Log.e("VideoFragment","playerView is ")
+                        }
+                        playVideoFromUrl(it.video)
+
+                        exoPlayer.addListener(object : Player.Listener {
+                            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                                binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
+                            }
+                        })
+
+                        binding.btnPly.setOnClickListener {
+                            exoPlayer.play()
+                            it.visibility = View.INVISIBLE
+                        }
+
+                        binding.detail.text = item.keterangan
+                        Glide.with(requireContext()).load(item.gambar).into(binding.gambarPelajaran)
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Gagal mendapatkan data", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<IsiPelajaran>, t: Throwable) {
+                Toast.makeText(requireContext(), "Kesalahan jaringan: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
+    private fun tampilkanDataKeUI(data: IsiPelajaran) {
+        binding.textJudul.text = data.huruf_kata_rangkaian
+        binding.detail.text = data.keterangan
+        Glide.with(requireContext()).load(data.gambar).into(binding.gambarPelajaran)
+        playVideoFromUrl(data.video)
+
+        exoPlayer.addListener(object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
+            }
+        })
+
+        binding.btnPly.setOnClickListener {
+            exoPlayer.play()
+            it.visibility = View.INVISIBLE
+        }
+
+    }
+//        val getId2 = this.arguments?.get("id2")
+//        lifecycleScope.launch {
+//            try {
+//                val data = RetrofitClient.apiService.getPelajaran() // dapetin list dari API
+//
+//                // cari berdasarkan ID
+//                val selectedData = data.find { it.id == getId2 }
+//
+//                selectedData?.let { item ->
+//                    binding.textJudul.text = item.judul
+//                    playVideoFromUrl(item.video_url)
+//
+//                    exoPlayer.addListener(object : Player.Listener {
+//                        override fun onIsPlayingChanged(isPlaying: Boolean) {
+//                            binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
+//                        }
+//                    })
+//
+//                    binding.btnPly.setOnClickListener {
+//                        exoPlayer.play()
+//                        it.visibility = View.INVISIBLE
+//                    }
+//
+//                    binding.detail.text = item.deskripsi
+//                    Glide.with(requireContext()).load(item.gambar_url).into(binding.gambarPelajaran)
+//                }
+//
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                Toast.makeText(requireContext(), "Gagal memuat data", Toast.LENGTH_SHORT).show()
+//            }
+//        }
 //        val data2 = pelajaranHurufViewModel.hurufListFathahtain
 //        for(i in data2.indices) {
 //            var getDataId2 = data2[i].id
@@ -135,7 +202,7 @@ class VideoPembelajaranFragment : Fragment() {
 //            }
 //        }
 
-    }
+
     private fun ytPlayer3(){
         val getId3 = this.arguments?.get("id3")
         val data3 = pelajaranHurufViewModel.hurufListKasrah
