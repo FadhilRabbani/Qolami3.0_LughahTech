@@ -25,6 +25,7 @@ import com.test.qolami.R
 import com.test.qolami.databinding.FragmentVideoPembelajaranBinding
 import com.test.qolami.model.network.RetrofitClient
 import com.test.qolami.view.pelajaran.data.IsiPelajaran
+import com.test.qolami.view.pelajaran.data.PelajaranResponse
 import com.test.qolami.viewnodel.PelajaranHurufViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -55,6 +56,8 @@ class VideoPembelajaranFragment : Fragment() {
         binding.backImg.setOnClickListener {
             findNavController().navigateUp()
         }
+        exoPlayer = ExoPlayer.Builder(requireContext()).build()
+        binding.playerView?.player = exoPlayer
         pelajaranHurufViewModel = ViewModelProvider(this).get(PelajaranHurufViewModel::class.java)
 //        youTubePlayerView = binding.ytPlayer
         val getJudul = this.arguments?.get("judul")
@@ -63,23 +66,33 @@ class VideoPembelajaranFragment : Fragment() {
             "Pelajaran 2" -> {
                 return ytPlayer2()
             }
+
             "Pelajaran 3" -> {
                 return ytPlayer3()
             }
+
             "Pelajaran 4" -> {
                 return ytPlayer4()
             }
         }
 
     }
-    private fun playVideoFromUrl(videoUrl: String) {
+
+    private fun playVideoFromUrl(videoUrl: String?) {
+        if (videoUrl.isNullOrBlank()) {
+            Log.e("VideoFragment", "videoUrl is null or blank")
+            return
+        }
+
+        Log.d("VideoFragment", "videoUrl: $videoUrl")
+
         exoPlayer = ExoPlayer.Builder(requireContext()).build()
         binding.playerView?.player = exoPlayer
+
         val mediaItem = MediaItem.fromUri(videoUrl)
         exoPlayer.setMediaItem(mediaItem)
-        exoPlayer.repeatMode = Player.REPEAT_MODE_ONE  // <-- loop video terus
         exoPlayer.prepare()
-        exoPlayer.playWhenReady
+        exoPlayer.playWhenReady = true
     }
 
     private fun ytPlayer2() {
@@ -88,63 +101,115 @@ class VideoPembelajaranFragment : Fragment() {
                 .show()
             return
         }
-        RetrofitClient.instance.getPelajaran(2, getId2).enqueue(object : Callback<IsiPelajaran> {
-            override fun onResponse(call: Call<IsiPelajaran>, response: Response <IsiPelajaran>) {
-                if (response.isSuccessful) {
-                    val item = response.body()
-                    item?.let {
-                        binding.textJudul.text = it.huruf_kata_rangkaian
-                        if (binding.playerView == null) {
-                            Log.e("VideoFragment", "playerView is null")
-                            return
-                        }else{
-                            Log.e("VideoFragment","playerView is ")
-                        }
-                        playVideoFromUrl(it.video)
-
-                        exoPlayer.addListener(object : Player.Listener {
-                            override fun onIsPlayingChanged(isPlaying: Boolean) {
-                                binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
+        RetrofitClient.instance.getPelajaran(2, getId2)
+            .enqueue(object : Callback<PelajaranResponse> {
+                override fun onResponse(
+                    call: Call<PelajaranResponse>,
+                    response: Response<PelajaranResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val item = response.body()?.data
+                        item?.let {
+                            binding.textJudul.text = "Pelajaran ${it.id}"
+                            if (binding.playerView == null) {
+                                Log.e("VideoFragment", "playerView is null")
+                                return
+                            } else {
+                                Log.e("VideoFragment", "playerView is not null")
                             }
-                        })
+                            playVideoFromUrl(it.videoUrl)
 
-                        binding.btnPly.setOnClickListener {
-                            exoPlayer.play()
-                            it.visibility = View.INVISIBLE
+                            exoPlayer.addListener(object : Player.Listener {
+                                override fun onIsPlayingChanged(isPlaying: Boolean) {
+                                    binding.btnPly.visibility =
+                                        if (isPlaying) View.INVISIBLE else View.VISIBLE
+                                }
+                            })
+
+                            binding.btnPly.setOnClickListener {
+                                exoPlayer.play()
+                                it.visibility = View.INVISIBLE
+                            }
+
+                            binding.detail.text = it.keterangan
+                            Glide.with(requireContext()).load(it.gambarUrl)
+                                .into(binding.gambarPelajaran)
                         }
-
-                        binding.detail.text = item.keterangan
-                        Glide.with(requireContext()).load(item.gambar).into(binding.gambarPelajaran)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Gagal mendapatkan data",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                } else {
-                    Toast.makeText(requireContext(), "Gagal mendapatkan data", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<IsiPelajaran>, t: Throwable) {
-                Toast.makeText(requireContext(), "Kesalahan jaringan: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-    }
-    private fun tampilkanDataKeUI(data: IsiPelajaran) {
-        binding.textJudul.text = data.huruf_kata_rangkaian
-        binding.detail.text = data.keterangan
-        Glide.with(requireContext()).load(data.gambar).into(binding.gambarPelajaran)
-        playVideoFromUrl(data.video)
-
-        exoPlayer.addListener(object : Player.Listener {
-            override fun onIsPlayingChanged(isPlaying: Boolean) {
-                binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
-            }
-        })
-
-        binding.btnPly.setOnClickListener {
-            exoPlayer.play()
-            it.visibility = View.INVISIBLE
-        }
+                override fun onFailure(call: Call<PelajaranResponse>, t: Throwable) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Kesalahan jaringan: ${t.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
 
     }
+//            override fun onResponse(call: Call<PelajaranResponse>, response: Response <PelajaranResponse>) {
+//                if (response.isSuccessful) {
+//                    val item = response.body()
+//                    item?.let {
+//                        binding.textJudul.text = it.huruf_kata_rangkaian
+//                        if (binding.playerView == null) {
+//                            Log.e("VideoFragment", "playerView is null")
+//                            return
+//                        }else{
+//                            Log.e("VideoFragment","playerView is not null")
+//                        }
+//                        playVideoFromUrl(it.videoUrl)
+//
+//                        exoPlayer.addListener(object : Player.Listener {
+//                            override fun onIsPlayingChanged(isPlaying: Boolean) {
+//                                binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
+//                            }
+//                        })
+//
+//                        binding.btnPly.setOnClickListener {
+//                            exoPlayer.play()
+//                            it.visibility = View.INVISIBLE
+//                        }
+//
+//                        binding.detail.text = item.keterangan
+//                        Glide.with(requireContext()).load(item.gambarUrl).into(binding.gambarPelajaran)
+//                    }
+//                } else {
+//                    Toast.makeText(requireContext(), "Gagal mendapatkan data", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<IsiPelajaran>, t: Throwable) {
+//                Toast.makeText(requireContext(), "Kesalahan jaringan: ${t.message}", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+
+
+//    private fun tampilkanDataKeUI(data: IsiPelajaran) {
+//        binding.textJudul.text = data.huruf_kata_rangkaian
+//        binding.detail.text = data.keterangan
+//        Glide.with(requireContext()).load(data.gambarUrl).into(binding.gambarPelajaran)
+//        playVideoFromUrl(data.videoUrl)
+//
+//        exoPlayer.addListener(object : Player.Listener {
+//            override fun onIsPlayingChanged(isPlaying: Boolean) {
+//                binding.btnPly.visibility = if (isPlaying) View.INVISIBLE else View.VISIBLE
+//            }
+//        })
+//
+//        binding.btnPly.setOnClickListener {
+//            exoPlayer.play()
+//            it.visibility = View.INVISIBLE
+//        }
+//
+//    }
 //        val getId2 = this.arguments?.get("id2")
 //        lifecycleScope.launch {
 //            try {
@@ -203,14 +268,15 @@ class VideoPembelajaranFragment : Fragment() {
 //        }
 
 
-    private fun ytPlayer3(){
+    private fun ytPlayer3() {
         val getId3 = this.arguments?.get("id3")
         val data3 = pelajaranHurufViewModel.hurufListKasrah
-        for(i in data3.indices) {
+        for (i in data3.indices) {
             var getDataId3 = data3[i].id
-            if(getDataId3 == getId3){
+            if (getDataId3 == getId3) {
                 binding.textJudul.text = data3[i].pelajaran
-                youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
+                youTubePlayerView.addYouTubePlayerListener(object :
+                    AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
                         youTubePlayer = player
                         player.cueVideo(data3[i].idYoutube, 0f)
@@ -221,7 +287,7 @@ class VideoPembelajaranFragment : Fragment() {
                         state: PlayerConstants.PlayerState
                     ) {
                         if (state == PlayerConstants.PlayerState.ENDED)
-                            binding.btnPly.visibility= View.VISIBLE
+                            binding.btnPly.visibility = View.VISIBLE
                     }
                 })
                 binding.btnPly.setOnClickListener {
@@ -234,14 +300,16 @@ class VideoPembelajaranFragment : Fragment() {
         }
 
     }
-    private fun ytPlayer4(){
+
+    private fun ytPlayer4() {
         val getId4 = this.arguments?.get("id4")
         val data4 = pelajaranHurufViewModel.hurufListDhammah
-        for(i in data4.indices) {
+        for (i in data4.indices) {
             var getDataId4 = data4[i].id
-            if(getDataId4 == getId4){
+            if (getDataId4 == getId4) {
                 binding.textJudul.text = data4[i].pelajaran
-                youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
+                youTubePlayerView.addYouTubePlayerListener(object :
+                    AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
                         youTubePlayer = player
                         player.cueVideo(data4[i].idYoutube, 0f)
@@ -252,7 +320,7 @@ class VideoPembelajaranFragment : Fragment() {
                         state: PlayerConstants.PlayerState
                     ) {
                         if (state == PlayerConstants.PlayerState.ENDED)
-                            binding.btnPly.visibility= View.VISIBLE
+                            binding.btnPly.visibility = View.VISIBLE
                     }
                 })
                 binding.btnPly.setOnClickListener {
@@ -265,12 +333,12 @@ class VideoPembelajaranFragment : Fragment() {
         }
 
     }
+
     override fun onStop() {
         super.onStop()
         if (::exoPlayer.isInitialized) {
             exoPlayer.release()
         }
     }
-
-
 }
+

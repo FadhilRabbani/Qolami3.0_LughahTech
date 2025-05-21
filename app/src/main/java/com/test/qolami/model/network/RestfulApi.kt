@@ -6,6 +6,7 @@ import com.test.qolami.model.data.score.DataX
 import com.test.qolami.model.data.user.*
 import com.test.qolami.model.data.user.Data
 import com.test.qolami.view.pelajaran.data.IsiPelajaran
+import com.test.qolami.view.pelajaran.data.PelajaranResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -17,7 +18,7 @@ interface RestfulApi {
         fun getPelajaran(
             @Path("pelajaran_id") pelajaranId: Int,
             @Path("id") id: Int
-        ): Call<IsiPelajaran>
+        ): Call<PelajaranResponse>
 //        @POST("login")
 //        fun loginUser(@Body request: LoginRequest): Call<LoginResponse>
     }
