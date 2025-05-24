@@ -12,35 +12,37 @@ import com.bumptech.glide.Glide
 import com.test.qolami.R
 import com.test.qolami.databinding.DataLatihanHurufBinding
 import com.test.qolami.view.latihan.DataLatihanHuruf
+import com.test.qolami.view.latihan.LatihanItem
 
 
-class LatihanHurufAdapter (var dataHuruf: ArrayList<DataLatihanHuruf>):RecyclerView.Adapter<LatihanHurufAdapter.ViewHolder>() {
-    class ViewHolder(var binding: DataLatihanHurufBinding): RecyclerView.ViewHolder(binding.root) {
+class LatihanHurufAdapter(private var dataLatihan: List<LatihanItem>) :
+    RecyclerView.Adapter<LatihanHurufAdapter.ViewHolder>() {
 
-    }
+    inner class ViewHolder(val binding: DataLatihanHurufBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view = DataLatihanHurufBinding.inflate(LayoutInflater.from(parent.context),parent, false)
-        return ViewHolder(view)
+        val binding = DataLatihanHurufBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return dataHuruf.size
-    }
+    override fun getItemCount(): Int = dataLatihan.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var angka = position
+        val item = dataLatihan[position]
+        holder.binding.imageLogoLatihan.setImageResource(R.drawable.img_hijaiyah) // placeholder, karena API ga ada gambar
+        holder.binding.textLatihan.text = item.nama
+        holder.binding.textPenjelasan.text = "Kategori: ${item.kategori_nama ?: "-"}"
 
-        Glide.with(holder.itemView).load(dataHuruf[position].logo).into(holder.binding.imageLogoLatihan)
-        holder.binding.textLatihan.text = dataHuruf[position].latihan
-        holder.binding.textPenjelasan.text = dataHuruf[position].penjelasan
         holder.binding.btnDetil.setOnClickListener {
-            angka++
             val bundle = Bundle()
-            bundle.putString("latihan", dataHuruf[position].latihan + " " + angka)
-            it.findNavController()
-                .navigate(R.id.action_fragmentLatihanHuruf_to_fragmentDetailLatihanHuruf, bundle)
+            bundle.putInt("latihan_id", item.id)
+            bundle.putString("jenis", "audio") // atau 'video', tergantung tombol atau intent
+            it.findNavController().navigate(R.id.action_fragmentLatihanHuruf_to_fragmentDetailLatihanHuruf, bundle)
         }
     }
 
+    fun setData(newData: List<LatihanItem>) {
+        dataLatihan = newData
+        notifyDataSetChanged()
+    }
 }

@@ -36,14 +36,12 @@ class PelajaranHuruf2Adapter( var listHurufFathah: ArrayList<DataMenuPelajaran1H
             else -> R.color.choklat_muda
         }
         val test = holder.itemView.context.resources.getColor(color, null)
-        val reverseIndex = listHurufFathah.size - position - 1
         holder.binding.cv.setCardBackgroundColor(test)
         holder.binding.imageView2.setOnClickListener {
             val bundle = Bundle()
-            val idForUrl = position + 29  // posisi 0 = id 28, dst
-            bundle.putInt("id2", idForUrl)
+            bundle.putInt("id2", listHurufFathah[position].id)
             bundle.putString("judul", "Pelajaran 2")
-            it.findNavController().navigate(R.id.videoPembelajaranFragment, bundle)
+            it.findNavController().navigate(R.id.action_pelajaran1Fragment_to_videoPembelajaranFragment, bundle)
         }
     }
 }

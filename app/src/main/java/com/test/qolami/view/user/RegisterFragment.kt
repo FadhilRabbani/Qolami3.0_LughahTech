@@ -9,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.test.qolami.R
 import com.test.qolami.databinding.FragmentRegisterBinding
 import com.test.qolami.model.data.user.Data
+import com.test.qolami.model.data.user.RegisterRequest
+import com.test.qolami.model.network.RetrofitClient
 //import com.test.qolami.viewnodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -46,30 +50,38 @@ class RegisterFragment : Fragment() {
     }
     private  fun register(){
         val namaLengkap = binding.etNamalengkap.text.toString()
-        val username = binding.etName.text.toString()
+        val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
-        if (namaLengkap.isEmpty() || username.isEmpty() || password.isEmpty()){
-            Toast.makeText(requireContext(), "Tolong Harap Di isi Semuanya", Toast.LENGTH_SHORT).show()
-        }else{
-//            userVM.registerPost(
-//                dataNewUser = Data(
-//                    " ",
-//                    password,
-//                    namaLengkap,
-//                    username,
-//                    0
-//                )
-//            )
-//            userVM.dataPostUser.observe(viewLifecycleOwner){
-//                val sharedPref = sharedPreferences.edit()
-//                sharedPref.putString("username", username)
-//                sharedPref.putString("password", password)
-//                sharedPref.putString("namaprofile", namaLengkap)
-//                sharedPref.putString("idUser", it.data.id)
-//                Toast.makeText(requireContext(), "Pendaftaran Berhasil", Toast.LENGTH_SHORT).show()
-//                sharedPref.apply()
-//            }
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        val confirmPassword = binding.etConfirmPassword.text.toString()
+        if (namaLengkap.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (password != confirmPassword) {
+            Toast.makeText(requireContext(), "Password tidak cocok", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val request = RegisterRequest(
+            name = namaLengkap,
+            email = email,
+            password = password,
+            password_confirmation = confirmPassword
+        )
+
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.registerUser(request)
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), "Registrasi berhasil", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                } else {
+                    Toast.makeText(requireContext(), "Registrasi gagal: ${response.errorBody()?.string()}", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

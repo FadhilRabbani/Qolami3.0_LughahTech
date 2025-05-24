@@ -96,27 +96,16 @@
             app:layout_constraintStart_toEndOf="@id/image_speaker"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.media3.ui.PlayerView
-            android:id="@+id/playerView"
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/yt_player"
             android:layout_width="360dp"
             android:layout_height="183dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_perhatikan"
-            app:use_controller="true" />
-
-        <ImageView
-            android:id="@+id/btn_ply"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:src="@drawable/baseline_play_circle_outline_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/playerView"
-            app:layout_constraintStart_toStartOf="@+id/playerView"
-            app:layout_constraintTop_toTopOf="@+id/playerView" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_perhatikan">
+        </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

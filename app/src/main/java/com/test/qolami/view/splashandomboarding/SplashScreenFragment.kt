@@ -15,25 +15,24 @@ import kotlinx.coroutines.delay
 @AndroidEntryPoint
 class SplashScreenFragment : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         Handler().postDelayed({
-            if (onBoardingFinished()){
-                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
-            }else{
-                findNavController().navigate(R.id.action_splashScreenFragment_to_onBoardingMangerFragment)
+            if (isAdded) { // Cek apakah fragment masih attach
+                if (onBoardingFinished()) {
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+                } else {
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_onBoardingMangerFragment)
+                }
             }
         }, 3000)
         return inflater.inflate(R.layout.fragment_splash_screen, container, false)
     }
 
-    private fun onBoardingFinished(): Boolean{
+    private fun onBoardingFinished(): Boolean {
         val sharePref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-        return  sharePref.getBoolean("Finished", false)
+        return sharePref.getBoolean("Finished", false)
     }
-
 }

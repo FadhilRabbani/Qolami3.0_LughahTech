@@ -39,7 +39,7 @@ class PelajaranHuruf5Adapter (var listHurufFathahain: ArrayList<DataMenuPelajara
         holder.binding.cv.setCardBackgroundColor(test)
         holder.binding.imageView2.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("id4", listHurufFathahain[position].id)
+            bundle.putInt("id5", listHurufFathahain[position].id)
             bundle.putString("judul", "Pelajaran 5")
             it.findNavController().navigate(R.id.action_pelajaran1Fragment_to_videoPembelajaranFragment, bundle)
         }

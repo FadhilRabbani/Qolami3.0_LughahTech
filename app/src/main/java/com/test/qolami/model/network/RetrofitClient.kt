@@ -1,6 +1,7 @@
 package com.test.qolami.model.network
 
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,17 +12,25 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import com.test.qolami.BuildConfig
+import com.test.qolami.MyApp
 
-@Module
-@InstallIn(SingletonComponent::class)
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.1.12:8000/api/"
+    private const val BASE_URL = "http://192.168.1.18:8000/api/"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
     private val client = OkHttpClient.Builder()
+        .addInterceptor { chain ->
+            val requestBuilder = chain.request().newBuilder()
+            val sharedPrefs = MyApp.instance.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+            val token = sharedPrefs.getString("token", null)
+            if (!token.isNullOrEmpty()) {
+                requestBuilder.addHeader("Authorization", "Bearer $token")
+            }
+            chain.proceed(requestBuilder.build())
+        }
         .addInterceptor(loggingInterceptor)
         .build()
 

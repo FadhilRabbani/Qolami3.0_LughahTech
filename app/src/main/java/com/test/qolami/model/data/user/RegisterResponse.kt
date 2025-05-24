@@ -1,7 +1,10 @@
 package com.test.qolami.model.data.user
 
+import android.service.autofill.UserData
+
 data class RegisterResponse(
-    val token: String,
-    val user: User
+    val message: String,
+    val user: UserData,
+    val token: String
 )
 

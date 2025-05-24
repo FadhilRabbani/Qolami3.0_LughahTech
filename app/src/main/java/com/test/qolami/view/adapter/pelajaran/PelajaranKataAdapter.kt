@@ -33,7 +33,7 @@ class PelajaranKataAdapter(var dataKata: ArrayList<DataPelajaranKata>): Recycler
         holder.binding.btnDetil.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("pelajaran", dataKata[position].pelajaran)
-            it.findNavController().navigate(R.id.action_pelajaranHurufFragment_to_detailPelajaranFragment, bundle)
+            it.findNavController().navigate(R.id.action_fragmentpelajaranKata_to_fragmentPelajaranFathah, bundle)
         }
     }
 }

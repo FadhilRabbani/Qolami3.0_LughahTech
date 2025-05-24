@@ -319,7 +319,53 @@
         android:id="@+id/fragmentPelajaranKata"
         android:name="com.test.qolami.view.pelajaran.PelajaranKataFragment"
         android:label="fragment_pelajaran_kata">
-
-
+        <action
+            android:id="@+id/action_fragmentpelajaranKata_to_fragmentPelajaranFathah"
+            app:destination="@+id/fragmentKataFathah"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentKataFathah"
+        android:name="com.test.qolami.view.pelajaran.pelajarankata.PelajaranKataFathah"
+        android:label="fragment_pelajaran_fathah">
+        <action
+            android:id="@+id/action_fathah_to_kasrah"
+            app:destination="@id/fragmentKataKasrah"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_fathah_to_dhammah"
+            app:destination="@+id/fragmentDhammah"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentKataKasrah"
+        android:name="com.test.qolami.view.pelajaran.pelajarankata.PelajaranKataKasrah"
+        android:label="fragment_pelajaran_kasrah">
+        <action
+            android:id="@+id/action_kasrah_to_fathah"
+            app:destination="@+id/fragmentKataFathah"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_kasrah_to_dhammah"
+            app:destination="@+id/fragmentDhammah"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDhammah"
+        android:name="com.test.qolami.view.pelajaran.pelajarankata.PelajaranKataDhammah"
+        android:label="fragment_pelajaran_dhammah">
+        <action
+            android:id="@+id/action_dhammah_to_fathah"
+            app:destination="@+id/fragmentKataFathah"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_dhammah_to_kasrah"
+            app:destination="@+id/fragmentKataKasrah"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
     </fragment>
 </navigation>

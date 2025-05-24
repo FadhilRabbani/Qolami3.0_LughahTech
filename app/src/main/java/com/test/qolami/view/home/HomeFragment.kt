@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
 //        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         val getToken = sharedPreferences.getString("token", "")
         if (getToken!!.isNotEmpty()) {
-            val getUsername = sharedPreferences.getString("name", "")
+            val getUsername = sharedPreferences.getString("userName", "")
             binding.textNamaUser.text = getUsername.toString()
         }
         binding.buttonPelajaran.setOnClickListener {

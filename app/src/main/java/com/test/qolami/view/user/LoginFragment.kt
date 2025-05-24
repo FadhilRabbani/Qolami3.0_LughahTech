@@ -10,11 +10,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.test.qolami.R
 import com.test.qolami.databinding.FragmentLoginBinding
+import com.test.qolami.model.data.user.LoginRequest
+import com.test.qolami.model.network.RetrofitClient
 //import com.test.qolami.viewnodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -45,48 +49,49 @@ class LoginFragment : Fragment() {
         }
         //pindah ke home fragment
         binding.buttonMasuk.setOnClickListener {
-//            login()
+            login()
 
         }
         binding.textMasuktanpalogin.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }
     }
-    //untuk variable menentukan masuk ke else username benar dan password salah
-    private var isPositiveResponseReceived = false
-    //fungsi login untuk mengecek apakah username atau password sudah benar atau belum
-//    private fun login(){
-//        userViewModel.dataPostLogin.removeObservers(viewLifecycleOwner)
-//        val emailInput = binding.etEmail.text.toString()
-//        val passwordInput = binding.etPassword.text.toString()
-//        if (emailInput.isNotEmpty() && passwordInput.isNotEmpty()) {
-//            userViewModel.loginPost(emailInput, passwordInput)
-//            userViewModel.dataPostLogin.observe(viewLifecycleOwner) { loginUserResponse ->
-//                Log.i("LoginStatus", "Status: $loginUserResponse")
-//                if(loginUserResponse != null) {
-//                    val test = loginUserResponse.data.token
-//                    val id = loginUserResponse.data._id
-//                    val profileName = loginUserResponse.data.username
-//                    val sharedPreferences = requireContext().getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
-//                    sharedPreferences.edit().putString("token", test).apply()
-//                    sharedPreferences.edit().putString("id", id).apply()
-//                    sharedPreferences.edit().putString("name", profileName).apply()
-//                    Log.i("observer", "1")
-//                    Log.i("id", "$id")
-//                    Toast.makeText(context, "Login Berhasil!", Toast.LENGTH_SHORT).show()
-//                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-//                    isPositiveResponseReceived = true
-//                } else {
-//                    if (!isPositiveResponseReceived) {
-//                        Log.i("observer", "$isPositiveResponseReceived")
-//                        Toast.makeText(context, "Username atau Password Salah!", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                isPositiveResponseReceived = true
-//            }
-//        }else{
-//            Toast.makeText(context, "Harap isi username dan password dengan benar!", Toast.LENGTH_SHORT).show()
-//        }
-//    }
+    private fun login() {
+        val email = binding.etEmail.text.toString()
+        val password = binding.etPassword.text.toString()
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(requireContext(), "Harap isi email dan password!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val loginRequest = LoginRequest(email, password)
+
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.loginUser(loginRequest)
+                if (response.isSuccessful) {
+                    val loginData = response.body()
+                    if (loginData != null) {
+                        val sharedPref = requireContext().getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putString("token", loginData.token)
+                            putInt("userId", loginData.user.id)
+                            putString("userName", loginData.user.name)
+                            putString("userEmail", loginData.user.email)
+                            apply()
+                        }
+                        Toast.makeText(requireContext(), "Login berhasil!", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Login gagal: ${response.code()}", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
 
 }

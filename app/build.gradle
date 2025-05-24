@@ -76,6 +76,9 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0'
     //exo player dependency
     implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
 }
 kapt {
     correctErrorTypes true
