@@ -19,12 +19,15 @@ import com.test.qolami.model.network.RetrofitClient
 //import com.test.qolami.viewnodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private lateinit var binding:FragmentRegisterBinding
 //    private lateinit var userVM: UserViewModel
     private lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var retrofitClient: RetrofitClient
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,10 +72,9 @@ class RegisterFragment : Fragment() {
             password = password,
             password_confirmation = confirmPassword
         )
-
         lifecycleScope.launch {
             try {
-                val response = RetrofitClient.instance.registerUser(request)
+                val response = retrofitClient.apiService.registerUser(request)  // Gunakan apiService yang sudah disuntikkan
                 if (response.isSuccessful) {
                     Toast.makeText(requireContext(), "Registrasi berhasil", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
@@ -83,6 +85,19 @@ class RegisterFragment : Fragment() {
                 Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
             }
         }
+//        lifecycleScope.launch {
+//            try {
+//                val response = RetrofitClient.instance.registerUser(request)
+//                if (response.isSuccessful) {
+//                    Toast.makeText(requireContext(), "Registrasi berhasil", Toast.LENGTH_SHORT).show()
+//                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+//                } else {
+//                    Toast.makeText(requireContext(), "Registrasi gagal: ${response.errorBody()?.string()}", Toast.LENGTH_SHORT).show()
+//                }
+//            } catch (e: Exception) {
+//                Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+//            }
+//        }
     }
 
 

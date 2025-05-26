@@ -1,397 +1,170 @@
-//package com.test.qolami.view.latihan
-//
-//import android.content.Context
-//import android.content.SharedPreferences
-//import android.os.Bundle
-//import android.util.Log
-//import androidx.fragment.app.Fragment
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import android.widget.TextView
-//import androidx.cardview.widget.CardView
-//import androidx.lifecycle.ViewModelProvider
-//import androidx.navigation.fragment.findNavController
-//import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
-//import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-//import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-//import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-//import com.test.qolami.R
-//import com.test.qolami.databinding.FragmentSoalLatihanVideosBinding
-//import com.test.qolami.viewnodel.LatihanHurufViewModel
-//import dagger.hilt.android.AndroidEntryPoint
-//
-//
-//@Suppress("DEPRECATION")
-//@AndroidEntryPoint
-//class FragmentSoalLatihanVideos : Fragment() {
-//    private lateinit var binding: FragmentSoalLatihanVideosBinding
-//    private lateinit var latihanHurufViewModel: LatihanHurufViewModel
-//    private lateinit var sharedPreferences: SharedPreferences
-//    private var indexTerkini = 1
-//    private var indexYangDipilih = 0
-//    private var jumlahBenarVideos = 0
-//    private var jumlahSalahVideos = 0
-//    var subtitle = ""
-//    var title = ""
-//    private lateinit var youTubePlayerView: YouTubePlayerView
-//    private var youTubePlayer: YouTubePlayer? = null
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        binding = FragmentSoalLatihanVideosBinding.inflate(layoutInflater, container, false)
-//        // Inflate the layout for this fragment
-//        return binding.root
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        binding.backImg.setOnClickListener {
-//            findNavController().navigateUp()
-//        }
-//        sharedPreferences = requireContext().getSharedPreferences("judul", Context.MODE_PRIVATE)
-//        val judulLatihan = sharedPreferences.getString("latihanVideo", "")
-//        binding.textPelajaran.text = judulLatihan
-//        binding.backImg.setOnClickListener {
-//            findNavController().navigateUp()
-//        }
-//        youTubePlayerView = binding.ytPlayer
-//        latihanHurufViewModel = ViewModelProvider(this).get(LatihanHurufViewModel::class.java)
-//        binding.option1.setOnClickListener {
-//            selectedOption(0, binding.txtJawaban1, binding.option1)
-//        }
-//        binding.option2.setOnClickListener {
-//            selectedOption(1, binding.txtJawaban2, binding.option2)
-//        }
-//        binding.option3.setOnClickListener {
-//            selectedOption(2, binding.txtJawaban3, binding.option3)
-//        }
-//        binding.option4.setOnClickListener {
-//            selectedOption(3, binding.txtJawaban4, binding.option4)
-//        }
-//        when(binding.textPelajaran.text){
-//            "Latihan 1" ->
-//                setSoal1()
-//            "Latihan 2" ->
-//                setSoal2()
-//            "Latihan 3" ->
-//                setSoal3()
-//            "Latihan 4" ->
-//                setSoal4()
-//        }
-//        binding.buttonCheckSoal.setOnClickListener {
-//            if(checkSoal() == true){
-//                jumlahBenarVideos++
-//                Log.i("asas", "$jumlahBenarVideos")
-//            }else {
-//                jumlahSalahVideos++
-//                Log.i("asas", "$jumlahSalahVideos")
-//            }
-//            showBottomSheetDialog()
-//        }
-//    }
-//    private fun setSoal1(){
-//        latihanHurufViewModel.getSoalVideoHijaiyah()
-//        latihanHurufViewModel.dataSoalVideosHijaiyah.observe(viewLifecycleOwner){
-//            title = it.latihanHijaiyahVideo[indexTerkini - 1].title
-//            subtitle = it.latihanHijaiyahVideo[indexTerkini - 1].subtitle
-//            binding.textJudul.text = it.latihanHijaiyahVideo[indexTerkini - 1].subtitle
-//            youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
-//                override fun onReady(youTubePlayer: YouTubePlayer) {
-//                    this@FragmentSoalLatihanVideos.youTubePlayer = youTubePlayer
-//                    this@FragmentSoalLatihanVideos.youTubePlayer?.cueVideo(it.latihanHijaiyahVideo[indexTerkini-1].videoId, 0f)
-//                }
-//
-//                override fun onStateChange(
-//                    youTubePlayer: YouTubePlayer,
-//                    state: PlayerConstants.PlayerState
-//                ) {
-//                    if (state == PlayerConstants.PlayerState.ENDED)
-//                        binding.btnPly.visibility= View.VISIBLE
-//                }
-//            })
-//            binding.btnPly.setOnClickListener {
-//                youTubePlayer?.play()
-//                binding.btnPly.visibility = View.INVISIBLE
-//            }
-//            binding.txtJawaban1.text = it.latihanHijaiyahVideo[indexTerkini - 1].options[0]
-//            binding.txtJawaban2.text = it.latihanHijaiyahVideo[indexTerkini - 1].options[1]
-//            binding.txtJawaban3.text = it.latihanHijaiyahVideo[indexTerkini - 1].options[2]
-//            binding.txtJawaban4.text = it.latihanHijaiyahVideo[indexTerkini - 1].options[3]
-//        }
-//        defaultStyle()
-//    }
-//    private fun setSoal2(){
-//        latihanHurufViewModel.getSoalVideoFathah()
-//        latihanHurufViewModel.dataSoalVideosFathah.observe(viewLifecycleOwner){
-//            title = it.latihanFathahVideo[indexTerkini - 1].title
-//            subtitle = it.latihanFathahVideo[indexTerkini - 1].subtitle
-//            binding.textJudul.text = it.latihanFathahVideo[indexTerkini - 1].subtitle
-//            youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
-//                override fun onReady(youTubePlayer: YouTubePlayer) {
-//                    this@FragmentSoalLatihanVideos.youTubePlayer = youTubePlayer
-//                    this@FragmentSoalLatihanVideos.youTubePlayer?.cueVideo(it.latihanFathahVideo[indexTerkini-1].videoId, 0f)
-//                }
-//
-//                override fun onStateChange(
-//                    youTubePlayer: YouTubePlayer,
-//                    state: PlayerConstants.PlayerState
-//                ) {
-//                    if (state == PlayerConstants.PlayerState.ENDED)
-//                        binding.btnPly.visibility= View.VISIBLE
-//                }
-//            })
-//            binding.btnPly.setOnClickListener {
-//                youTubePlayer?.play()
-//                binding.btnPly.visibility = View.INVISIBLE
-//            }
-//            binding.txtJawaban1.text = it.latihanFathahVideo[indexTerkini - 1].options[0]
-//            binding.txtJawaban2.text = it.latihanFathahVideo[indexTerkini - 1].options[1]
-//            binding.txtJawaban3.text = it.latihanFathahVideo[indexTerkini - 1].options[2]
-//            binding.txtJawaban4.text = it.latihanFathahVideo[indexTerkini - 1].options[3]
-//        }
-//        defaultStyle()
-//    }
-//    private fun setSoal3(){
-//        latihanHurufViewModel.getSoalVideoKasrah()
-//        latihanHurufViewModel.dataSoalVideosKasrah.observe(viewLifecycleOwner){
-//            title = it.latihanKasrahVideo[indexTerkini - 1].title
-//            subtitle = it.latihanKasrahVideo[indexTerkini - 1].subtitle
-//            binding.textJudul.text = it.latihanKasrahVideo[indexTerkini - 1].subtitle
-//            youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
-//                override fun onReady(youTubePlayer: YouTubePlayer) {
-//                    this@FragmentSoalLatihanVideos.youTubePlayer = youTubePlayer
-//                    this@FragmentSoalLatihanVideos.youTubePlayer?.cueVideo(it.latihanKasrahVideo[indexTerkini-1].videoId, 0f)
-//                }
-//
-//                override fun onStateChange(
-//                    youTubePlayer: YouTubePlayer,
-//                    state: PlayerConstants.PlayerState
-//                ) {
-//                    if (state == PlayerConstants.PlayerState.ENDED)
-//                        binding.btnPly.visibility= View.VISIBLE
-//                }
-//            })
-//            binding.btnPly.setOnClickListener {
-//                youTubePlayer?.play()
-//                binding.btnPly.visibility = View.INVISIBLE
-//            }
-//            binding.txtJawaban1.text = it.latihanKasrahVideo[indexTerkini - 1].options[0]
-//            binding.txtJawaban2.text = it.latihanKasrahVideo[indexTerkini - 1].options[1]
-//            binding.txtJawaban3.text = it.latihanKasrahVideo[indexTerkini - 1].options[2]
-//            binding.txtJawaban4.text = it.latihanKasrahVideo[indexTerkini - 1].options[3]
-//        }
-//        defaultStyle()
-//    }
-//    private fun setSoal4(){
-//        latihanHurufViewModel.getSoalVideoDhammah()
-//        latihanHurufViewModel.dataSoalVideosDhammah.observe(viewLifecycleOwner){
-//            title = it.latihanDhammahVideo[indexTerkini - 1].title
-//            subtitle = it.latihanDhammahVideo[indexTerkini - 1].subtitle
-//            binding.textJudul.text = it.latihanDhammahVideo[indexTerkini - 1].subtitle
-//            youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
-//                override fun onReady(youTubePlayer: YouTubePlayer) {
-//                    this@FragmentSoalLatihanVideos.youTubePlayer = youTubePlayer
-//                    this@FragmentSoalLatihanVideos.youTubePlayer?.cueVideo(it.latihanDhammahVideo[indexTerkini-1].videoId, 0f)
-//                }
-//
-//                override fun onStateChange(
-//                    youTubePlayer: YouTubePlayer,
-//                    state: PlayerConstants.PlayerState
-//                ) {
-//                    if (state == PlayerConstants.PlayerState.ENDED)
-//                        binding.btnPly.visibility= View.VISIBLE
-//                }
-//            })
-//            binding.btnPly.setOnClickListener {
-//                youTubePlayer?.play()
-//                binding.btnPly.visibility = View.INVISIBLE
-//            }
-//            binding.txtJawaban1.text = it.latihanDhammahVideo[indexTerkini - 1].options[0]
-//            binding.txtJawaban2.text = it.latihanDhammahVideo[indexTerkini - 1].options[1]
-//            binding.txtJawaban3.text = it.latihanDhammahVideo[indexTerkini - 1].options[2]
-//            binding.txtJawaban4.text = it.latihanDhammahVideo[indexTerkini - 1].options[3]
-//        }
-//        defaultStyle()
-//    }
-//    private fun defaultStyle(){
-//        val options = ArrayList<CardView>()
-//        options.add(binding.option1)
-//        options.add(binding.option2)
-//        options.add(binding.option3)
-//        options.add(binding.option4)
-//        for(option in options){
-//            option.setCardBackgroundColor(resources.getColor(R.color.white))
-//        }
-//        val optionsText = ArrayList<TextView>()
-//        optionsText.add(binding.txtJawaban1)
-//        optionsText.add(binding.txtJawaban2)
-//        optionsText.add(binding.txtJawaban3)
-//        optionsText.add(binding.txtJawaban4)
-//        for (optionText in optionsText){
-//            optionText.setTextColor(resources.getColor(R.color.black))
-//        }
-//    }
-//    private fun selectedOption(indexDipilih: Int, tv: TextView, cv: CardView){
-//        defaultStyle()
-//        indexYangDipilih = indexDipilih
-//        tv.setTextColor(resources.getColor(R.color.white))
-//        cv.setCardBackgroundColor(resources.getColor(R.color.warna_hijau_muda))
-//    }
-//    fun checkSoal():Boolean{
-//        var indikator = false
-//        if (binding.textPelajaran.text == "Latihan 2") {
-//            latihanHurufViewModel.dataSoalVideosFathah.observe(viewLifecycleOwner) {
-//                if (indexYangDipilih == it.latihanFathahVideo[indexTerkini - 1].correctIndex) {
-//                    indikator = true
-//                } else {
-//                    indikator = false
-//                }
-//            }
-//        }else if (binding.textPelajaran.text == "Latihan 3"){
-//            latihanHurufViewModel.dataSoalVideosKasrah.observe(viewLifecycleOwner){
-//                if (indexYangDipilih == it.latihanKasrahVideo[indexTerkini - 1].correctIndex) {
-//                    indikator = true
-//                } else {
-//                    indikator = false
-//                }
-//            }
-//        }else if (binding.textPelajaran.text == "Latihan 4"){
-//            latihanHurufViewModel.dataSoalVideosDhammah.observe(viewLifecycleOwner){
-//                if (indexYangDipilih == it.latihanDhammahVideo[indexTerkini - 1].correctIndex) {
-//                    indikator = true
-//                } else {
-//                    indikator = false
-//                }
-//            }
-//        }else if (binding.textPelajaran.text == "Latihan 1"){
-//            latihanHurufViewModel.dataSoalVideosHijaiyah.observe(viewLifecycleOwner){
-//                if (indexYangDipilih == it.latihanHijaiyahVideo[indexTerkini - 1].correctIndex) {
-//                    indikator = true
-//                } else {
-//                    indikator = false
-//                }
-//            }
-//        }
-//        return  indikator
-//    }
-//
-//    fun lanjutSoal(){
-//        indexTerkini ++
-//        indexYangDipilih = 0
-//        if (binding.textPelajaran.text == "Latihan 2") {
-//            if (checkJumlahSoal() == true) {
-//                latihanHurufViewModel.dataSoalVideosFathah.observe(viewLifecycleOwner) {
-//                    binding.textJudul.text = it.latihanFathahVideo[indexTerkini - 1].subtitle
-//                    youTubePlayer?.cueVideo(it.latihanFathahVideo[indexTerkini - 1].videoId, 0f)
-//                    Log.i("yt", it.latihanFathahVideo[indexTerkini - 1].videoId)
-//                    binding.txtJawaban1.text = it.latihanFathahVideo[indexTerkini - 1].options[0]
-//                    binding.txtJawaban2.text = it.latihanFathahVideo[indexTerkini - 1].options[1]
-//                    binding.txtJawaban3.text = it.latihanFathahVideo[indexTerkini - 1].options[2]
-//                    binding.txtJawaban4.text = it.latihanFathahVideo[indexTerkini - 1].options[3]
-//                }
-//            }
-//        }else if(binding.textPelajaran.text == "Latihan 3"){
-//            if (checkJumlahSoal() == true) {
-//                latihanHurufViewModel.dataSoalVideosKasrah.observe(viewLifecycleOwner) {
-//                    binding.textJudul.text = it.latihanKasrahVideo[indexTerkini - 1].subtitle
-//                    youTubePlayer?.cueVideo(it.latihanKasrahVideo[indexTerkini - 1].videoId, 0f)
-//                    Log.i("yt", it.latihanKasrahVideo[indexTerkini - 1].videoId)
-//                    binding.txtJawaban1.text = it.latihanKasrahVideo[indexTerkini - 1].options[0]
-//                    binding.txtJawaban2.text = it.latihanKasrahVideo[indexTerkini - 1].options[1]
-//                    binding.txtJawaban3.text = it.latihanKasrahVideo[indexTerkini - 1].options[2]
-//                    binding.txtJawaban4.text = it.latihanKasrahVideo[indexTerkini - 1].options[3]
-//                }
-//            }
-//        }else if(binding.textPelajaran.text == "Latihan 4"){
-//            if (checkJumlahSoal() == true) {
-//                latihanHurufViewModel.dataSoalVideosDhammah.observe(viewLifecycleOwner) {
-//                    binding.textJudul.text = it.latihanDhammahVideo[indexTerkini - 1].subtitle
-//                    youTubePlayer?.cueVideo(it.latihanDhammahVideo[indexTerkini - 1].videoId, 0f)
-//                    Log.i("yt", it.latihanDhammahVideo[indexTerkini - 1].videoId)
-//                    binding.txtJawaban1.text = it.latihanDhammahVideo[indexTerkini - 1].options[0]
-//                    binding.txtJawaban2.text = it.latihanDhammahVideo[indexTerkini - 1].options[1]
-//                    binding.txtJawaban3.text = it.latihanDhammahVideo[indexTerkini - 1].options[2]
-//                    binding.txtJawaban4.text = it.latihanDhammahVideo[indexTerkini - 1].options[3]
-//                }
-//            }
-//        }else if(binding.textPelajaran.text == "Latihan 1") {
-//            if (checkJumlahSoal() == true) {
-//                latihanHurufViewModel.dataSoalVideosHijaiyah.observe(viewLifecycleOwner) {
-//                    binding.textJudul.text = it.latihanHijaiyahVideo[indexTerkini - 1].subtitle
-//                    youTubePlayer?.cueVideo(it.latihanHijaiyahVideo[indexTerkini - 1].videoId, 0f)
-//                    Log.i("yt", it.latihanHijaiyahVideo[indexTerkini - 1].videoId)
-//                    binding.txtJawaban1.text = it.latihanHijaiyahVideo[indexTerkini - 1].options[0]
-//                    binding.txtJawaban2.text = it.latihanHijaiyahVideo[indexTerkini - 1].options[1]
-//                    binding.txtJawaban3.text = it.latihanHijaiyahVideo[indexTerkini - 1].options[2]
-//                    binding.txtJawaban4.text = it.latihanHijaiyahVideo[indexTerkini - 1].options[3]
-//                }
-//            }
-//        }
-//        defaultStyle()
-//    }
-//
-//    private fun checkJumlahSoal():Boolean{
-//        var indikatorCheck = false
-//        val bundle = Bundle()
-//        bundle.putInt("JumlahBenarVideos", jumlahBenarVideos)
-//        bundle.putInt("JumlahSalahVideos", jumlahSalahVideos)
-//        bundle.putString("titleVideos", title)
-//        bundle.putString("subtitleVideos", subtitle)
-//        if(binding.textPelajaran.text == "Latihan 2") {
-//            latihanHurufViewModel.dataSoalVideosFathah.observe(viewLifecycleOwner) {
-//                if (indexTerkini > it.latihanFathahVideo.size) {
-//                    indikatorCheck = false
-//                    findNavController().navigate(
-//                        R.id.action_fragmentSoalLatihanVideos_to_fragmentHasilLatihanVideos,
-//                        bundle
-//                    )
-//                } else {
-//                    indikatorCheck = true
-//                }
-//            }
-//        }else if (binding.textPelajaran.text == "Latihan 3"){
-//            latihanHurufViewModel.dataSoalVideosKasrah.observe(viewLifecycleOwner) {
-//                if (indexTerkini > it.latihanKasrahVideo.size) {
-//                    indikatorCheck = false
-//                    findNavController().navigate(
-//                        R.id.action_fragmentSoalLatihanVideos_to_fragmentHasilLatihanVideos,
-//                        bundle
-//                    )
-//                } else {
-//                    indikatorCheck = true
-//                }
-//            }
-//        }else if (binding.textPelajaran.text == "Latihan 4"){
-//            latihanHurufViewModel.dataSoalVideosDhammah.observe(viewLifecycleOwner) {
-//                if (indexTerkini > it.latihanDhammahVideo.size) {
-//                    indikatorCheck = false
-//                    findNavController().navigate(
-//                        R.id.action_fragmentSoalLatihanVideos_to_fragmentHasilLatihanVideos, bundle
-//                    )
-//                } else {
-//                    indikatorCheck = true
-//                }
-//            }
-//        }else if (binding.textPelajaran.text == "Latihan 1"){
-//            latihanHurufViewModel.dataSoalVideosHijaiyah.observe(viewLifecycleOwner) {
-//                if (indexTerkini > it.latihanHijaiyahVideo.size) {
-//                    indikatorCheck = false
-//                    findNavController().navigate(
-//                        R.id.action_fragmentSoalLatihanVideos_to_fragmentHasilLatihanVideos, bundle
-//                    )
-//                } else {
-//                    indikatorCheck = true
-//                }
-//            }
-//        }
-//        return indikatorCheck
-//    }
-//    private fun showBottomSheetDialog() {
-//        val bottomSheetDialogFragment = DialogFragmentJawabanLatihanVideos()
-//        bottomSheetDialogFragment.isCancelable = false
-//        bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
-//    }
-//
-//}
+package com.test.qolami.view.latihan
+
+import android.content.Context
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.cardview.widget.CardView
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import com.test.qolami.R
+import com.test.qolami.databinding.FragmentSoalLatihanVideosBinding
+import com.test.qolami.view.latihan.DataLatihan.SoalVideo
+import com.test.qolami.viewnodel.LatihanHurufViewModel
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class FragmentSoalLatihanVideos : Fragment() {
+    private lateinit var binding: FragmentSoalLatihanVideosBinding
+    private lateinit var latihanHurufViewModel: LatihanHurufViewModel
+    private lateinit var sharedPreferences: SharedPreferences
+    private var indexTerkini = 0
+    private var jawabanBenarList = mutableListOf<String>()
+    private var jumlahBenar = 0
+    private var jumlahSalah = 0
+    private lateinit var soalList: List<SoalVideo>
+    private lateinit var youTubePlayerView: YouTubePlayerView
+    private var youTubePlayer: YouTubePlayer? = null
+    private var indexYangDipilih = -1
+    private lateinit var optionCards: List<CardView>
+    private lateinit var optionImages: List<ImageView>
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentSoalLatihanVideosBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = requireContext().getSharedPreferences("judul", Context.MODE_PRIVATE)
+        setupViewModel()
+        setupYouTubePlayer()
+        loadLatihanIdAndSoal()
+        setupListeners()
+
+        optionCards = listOf(binding.option1, binding.option2, binding.option3, binding.option4)
+        optionImages = listOf(binding.imgOptionA!!, binding.imgOptionB!!, binding.imgOptionC!!, binding.imgOptionD!!)
+
+        val judul = sharedPreferences.getString("judulLatihanTampil", "Latihan Huruf")
+        Log.d("SoalLatihan", "Judul tampil = $judul")
+        binding.textJudul.text = judul
+    }
+
+    private fun setupViewModel() {
+        latihanHurufViewModel = ViewModelProvider(this)[LatihanHurufViewModel::class.java]
+    }
+
+    private fun setupYouTubePlayer() {
+        youTubePlayerView = binding.ytPlayer
+        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(player: YouTubePlayer) {
+                youTubePlayer = player
+                if (::soalList.isInitialized && soalList.isNotEmpty()) {
+                    youTubePlayer?.cueVideo(extractYoutubeId(soalList[indexTerkini].media_url), 0f)
+                }
+            }
+        })
+    }
+
+    private fun loadLatihanIdAndSoal() {
+        val latihanId = sharedPreferences.getInt("latihanId", -1)
+        if (latihanId != -1) {
+            latihanHurufViewModel.loadSoalVideo(latihanId)
+        }
+        latihanHurufViewModel.soalVideos.observe(viewLifecycleOwner) { list ->
+            if (list.isNotEmpty()) {
+                soalList = list
+                tampilkanSoal(soalList[indexTerkini])
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.backImg.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.option1.setOnClickListener { onOptionSelected(0) }
+        binding.option2.setOnClickListener { onOptionSelected(1) }
+        binding.option3.setOnClickListener { onOptionSelected(2) }
+        binding.option4.setOnClickListener { onOptionSelected(3) }
+
+        binding.buttonCheckSoal.setOnClickListener {
+            if (indexYangDipilih != -1) {
+                if (checkSoal(soalList[indexTerkini])) {
+                    jawabanBenarList.add("Benar")
+                    jumlahBenar++
+                } else {
+                    jawabanBenarList.add("Salah")
+                    jumlahSalah++
+                }
+                resetOptions()
+                lanjutSoal()
+            }
+        }
+    }
+
+    private fun onOptionSelected(index: Int) {
+        resetOptions()
+        indexYangDipilih = index
+        optionImages[index].setColorFilter(resources.getColor(R.color.white))
+        optionCards[index].setCardBackgroundColor(resources.getColor(R.color.warna_hijau_muda))
+    }
+
+    private fun resetOptions() {
+        indexYangDipilih = -1
+        optionCards.forEach { it.setCardBackgroundColor(resources.getColor(R.color.white)) }
+        optionImages.forEach { it.clearColorFilter() }
+    }
+
+    private fun tampilkanSoal(soal: SoalVideo) {
+        youTubePlayer?.cueVideo(extractYoutubeId(soal.media_url), 0f)
+
+        Glide.with(this).load(soal.opsi_a).into(binding.imgOptionA!!)
+        Glide.with(this).load(soal.opsi_b).into(binding.imgOptionB!!)
+        Glide.with(this).load(soal.opsi_c).into(binding.imgOptionC!!)
+        Glide.with(this).load(soal.opsi_d).into(binding.imgOptionD!!)
+
+        resetOptions()
+    }
+
+    private fun checkSoal(soal: SoalVideo): Boolean {
+        return when (indexYangDipilih) {
+            0 -> soal.opsi_a == soal.jawaban
+            1 -> soal.opsi_b == soal.jawaban
+            2 -> soal.opsi_c == soal.jawaban
+            3 -> soal.opsi_d == soal.jawaban
+            else -> false
+        }
+    }
+
+    private fun lanjutSoal() {
+        indexTerkini++
+        if (indexTerkini < soalList.size) {
+            tampilkanSoal(soalList[indexTerkini])
+        } else {
+            val bundle = Bundle()
+            bundle.putStringArrayList("jawabanBenarList", ArrayList(jawabanBenarList))
+            bundle.putInt("jumlahBenar", jumlahBenar)
+            bundle.putInt("jumlahSalah", jumlahSalah)
+            findNavController().navigate(R.id.action_fragmentSoalLatihanVideos_to_fragmentHasilLatihanVideos, bundle)
+        }
+    }
+
+    private fun extractYoutubeId(url: String): String {
+        val regex = "(?<=v=|be/|embed/)[^&?\\n]+".toRegex()
+        return regex.find(url)?.value ?: ""
+    }
+}

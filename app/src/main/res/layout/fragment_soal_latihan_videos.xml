@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/nunito_extrabold"
-
+            android:text="Latihan Huruf 1"
             android:textColor="@color/warna_hijau_tua"
             android:textSize="16sp" />
     </androidx.cardview.widget.CardView>
@@ -83,12 +83,12 @@
         app:layout_constraintTop_toBottomOf="@id/txt_penjelasan"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-        <ImageView
-            android:id="@+id/btn_ply"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:src="@drawable/baseline_play_circle_outline_24" />
+<!--        <ImageView-->
+<!--            android:id="@+id/btn_ply"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@drawable/baseline_play_circle_outline_24" />-->
 
     </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
 
@@ -115,16 +115,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/txt_jawaban1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/calibribold"
-                android:textColor="@color/black"
-                android:textSize="40sp">
+<!--            <TextView-->
+<!--                android:id="@+id/txt_jawaban1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:fontFamily="@font/calibribold"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="40sp">-->
 
-            </TextView>
+<!--            </TextView>-->
+            <ImageView
+                android:id="@+id/imgOptionA"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ain_dammahtain" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -136,17 +144,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/option_1"
             app:layout_constraintTop_toTopOf="parent"  >
-            <TextView
-                android:id="@+id/txt_jawaban2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
 
-                android:fontFamily="@font/calibribold"
-                android:textColor="@color/black"
-                android:textSize="40sp"
-                android:layout_gravity="center">
 
-            </TextView>
+            <ImageView
+                android:id="@+id/imgOptionB"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ain_dammahtain" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -159,16 +166,16 @@
             app:layout_constraintEnd_toStartOf="@+id/option_4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/option_1" >
-            <TextView
-                android:id="@+id/txt_jawaban3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/calibribold"
-                android:textColor="@color/black"
-                android:textSize="40sp"
-                android:layout_gravity="center">
 
-            </TextView>
+
+            <ImageView
+                android:id="@+id/imgOptionC"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ain_dammahtain" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -180,16 +187,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/option_3"
             app:layout_constraintTop_toBottomOf="@+id/option_2" >
-            <TextView
-                android:id="@+id/txt_jawaban4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/calibribold"
-                android:textColor="@color/black"
-                android:textSize="40sp"
-                android:layout_gravity="center">
 
-            </TextView>
+
+            <ImageView
+                android:id="@+id/imgOptionD"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ain_dammahtain" />
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.button.MaterialButton

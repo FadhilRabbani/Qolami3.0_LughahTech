@@ -19,13 +19,15 @@ import com.test.qolami.model.network.RetrofitClient
 //import com.test.qolami.viewnodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 //    private lateinit var userViewModel: UserViewModel
     private lateinit var sharedPreferences: SharedPreferences
-
+    @Inject
+    lateinit var retrofitClient: RetrofitClient
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,10 +68,9 @@ class LoginFragment : Fragment() {
         }
 
         val loginRequest = LoginRequest(email, password)
-
         lifecycleScope.launch {
             try {
-                val response = RetrofitClient.instance.loginUser(loginRequest)
+                val response = retrofitClient.apiService.loginUser(loginRequest)  // Gunakan apiService yang sudah disuntikkan
                 if (response.isSuccessful) {
                     val loginData = response.body()
                     if (loginData != null) {
@@ -91,6 +92,30 @@ class LoginFragment : Fragment() {
                 Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
             }
         }
+//        lifecycleScope.launch {
+//            try {
+//                val response = RetrofitClient.instance.loginUser(loginRequest)
+//                if (response.isSuccessful) {
+//                    val loginData = response.body()
+//                    if (loginData != null) {
+//                        val sharedPref = requireContext().getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+//                        with(sharedPref.edit()) {
+//                            putString("token", loginData.token)
+//                            putInt("userId", loginData.user.id)
+//                            putString("userName", loginData.user.name)
+//                            putString("userEmail", loginData.user.email)
+//                            apply()
+//                        }
+//                        Toast.makeText(requireContext(), "Login berhasil!", Toast.LENGTH_SHORT).show()
+//                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+//                    }
+//                } else {
+//                    Toast.makeText(requireContext(), "Login gagal: ${response.code()}", Toast.LENGTH_SHORT).show()
+//                }
+//            } catch (e: Exception) {
+//                Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+//            }
+//        }
     }
 
 
