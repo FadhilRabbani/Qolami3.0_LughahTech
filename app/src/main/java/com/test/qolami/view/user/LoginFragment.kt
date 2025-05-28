@@ -15,19 +15,24 @@ import androidx.navigation.fragment.findNavController
 import com.test.qolami.R
 import com.test.qolami.databinding.FragmentLoginBinding
 import com.test.qolami.model.data.user.LoginRequest
+import com.test.qolami.model.network.RestfulApi
 import com.test.qolami.model.network.RetrofitClient
 //import com.test.qolami.viewnodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 //    private lateinit var userViewModel: UserViewModel
     private lateinit var sharedPreferences: SharedPreferences
+
     @Inject
-    lateinit var retrofitClient: RetrofitClient
+    @Named("unauthenticated")
+    lateinit var unauthenticatedApiService: RestfulApi.ApiService
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,8 +44,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
         sharedPreferences = requireContext().getSharedPreferences("register", Context.MODE_PRIVATE)
+
         //pindah ke register fragment
         binding.textDaftar.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -70,7 +76,7 @@ class LoginFragment : Fragment() {
         val loginRequest = LoginRequest(email, password)
         lifecycleScope.launch {
             try {
-                val response = retrofitClient.apiService.loginUser(loginRequest)  // Gunakan apiService yang sudah disuntikkan
+                val response = unauthenticatedApiService.loginUser(loginRequest)
                 if (response.isSuccessful) {
                     val loginData = response.body()
                     if (loginData != null) {
@@ -82,6 +88,7 @@ class LoginFragment : Fragment() {
                             putString("userEmail", loginData.user.email)
                             apply()
                         }
+                        Log.d("LOGIN_SAVE", "Token disimpan: ${loginData.token}")
                         Toast.makeText(requireContext(), "Login berhasil!", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }

@@ -1,3 +1,5 @@
+import com.test.qolami.databinding.FragmentHasilLatihanBinding
+
 //package com.test.qolami.view.latihan
 //
 //import android.content.Context
@@ -18,7 +20,7 @@
 //
 //@AndroidEntryPoint
 //class FragmentHasilLatihan : Fragment() {
-//    private lateinit var binding: FragmentHasilLatihanBinding
+    private lateinit var binding: FragmentHasilLatihanBinding
 //    private lateinit var scoreViewModel : ScoreViewModel
 //    private lateinit var sharedPreferences: SharedPreferences
 //    override fun onCreateView(

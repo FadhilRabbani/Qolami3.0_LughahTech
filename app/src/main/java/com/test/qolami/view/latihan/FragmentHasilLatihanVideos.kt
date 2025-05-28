@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.test.qolami.R
 import com.test.qolami.databinding.FragmentHasilLatihanVideosBinding
-import com.test.qolami.viewnodel.ScoreViewModel
+//import com.test.qolami.viewnodel.ScoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -5,6 +5,7 @@ import com.test.qolami.model.data.score.*
 import com.test.qolami.model.data.score.DataX
 import com.test.qolami.model.data.user.*
 import com.test.qolami.model.data.user.Data
+import com.test.qolami.view.latihan.DataLatihan.SoalAudioResponse
 import com.test.qolami.view.latihan.DataLatihan.SoalLatihanResponse
 import com.test.qolami.view.latihan.DataLatihan.SoalVideo
 import com.test.qolami.view.latihan.LatihanListResponse
@@ -31,10 +32,13 @@ interface RestfulApi {
         @GET("latihan")
         fun getListLatihan(): Call<LatihanListResponse>
 
-        @GET("latihan/{latihanId}/{jenis}")
-        suspend fun getSoalLatihan(
-            @Path("latihanId") latihanId: Int,
-            @Path("jenis") jenis: String = "video"
+        @GET("latihan/{latihanId}/video")
+        suspend fun getSoalLatihanVideo(
+            @Path("latihanId") latihanId: Int
         ): Response<SoalLatihanResponse>
+        @GET("latihan/{latihanId}/audio")
+        suspend fun getSoalLatihanAudio(
+            @Path("latihanId") latihanId: Int
+        ): Response<SoalAudioResponse>
     }
 }

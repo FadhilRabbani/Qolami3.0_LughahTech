@@ -11,6 +11,7 @@ import com.test.qolami.R
 import com.test.qolami.view.latihan.DataLatihan.SoalLatihanResponse
 import com.test.qolami.model.data.latihan.*
 import com.test.qolami.model.network.RestfulApi
+import com.test.qolami.view.latihan.DataLatihan.SoalAudio
 import com.test.qolami.view.latihan.DataLatihan.SoalVideo
 import com.test.qolami.view.latihan.DataLatihanHuruf
 import com.test.qolami.view.latihan.LatihanItem
@@ -70,7 +71,7 @@ class LatihanHurufViewModel @Inject constructor (private val repository: Latihan
         viewModelScope.launch {
             try {
                 // Mengambil response dari repository
-                val response = repository.getSoalLatihan(latihanId, "video")
+                val response = repository.getSoalLatihanVideo(latihanId)
 
                 if (response.isSuccessful) {
                     // Jika response berhasil, ambil body yang berisi data soal
@@ -84,6 +85,23 @@ class LatihanHurufViewModel @Inject constructor (private val repository: Latihan
                 }
             } catch (e: Exception) {
                 Log.e("Latihan", "Error fetching soal latihan: ${e.localizedMessage}")
+            }
+        }
+    }
+    private val _soalAudios = MutableLiveData<List<SoalAudio>>()
+    val soalAudios: LiveData<List<SoalAudio>> = _soalAudios
+
+    fun loadSoalAudio(latihanId: Int) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getSoalLatihanAudio(latihanId)
+                if (response.isSuccessful) {
+                    _soalAudios.postValue(response.body()?.soal ?: emptyList())
+                } else {
+                    Log.e("AudioSoal", "Error: ${response.code()} - ${response.message()}")
+                }
+            } catch (e: Exception) {
+                Log.e("AudioSoal", "Exception: ${e.message}")
             }
         }
     }
