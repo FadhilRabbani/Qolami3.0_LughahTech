@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/warna_hijau_tua"
-        android:text="Lanjutkan"
+        android:text="Kembali"
         android:textColor="@color/white"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,6 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="@dimen/_30sdp"
         android:fontFamily="@font/montserrat_bold" />
     <com.google.android.material.card.MaterialCardView
         android:layout_width="130dp"

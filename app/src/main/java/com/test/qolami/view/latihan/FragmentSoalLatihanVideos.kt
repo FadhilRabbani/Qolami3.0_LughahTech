@@ -20,23 +20,27 @@ import com.test.qolami.R
 import com.test.qolami.databinding.FragmentSoalLatihanVideosBinding
 import com.test.qolami.view.latihan.DataLatihan.SoalVideo
 import com.test.qolami.viewnodel.LatihanHurufViewModel
+import com.test.qolami.viewnodel.LatihanKataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentSoalLatihanVideos : Fragment() {
     private lateinit var binding: FragmentSoalLatihanVideosBinding
-    private lateinit var latihanHurufViewModel: LatihanHurufViewModel
     private lateinit var sharedPreferences: SharedPreferences
-    private var indexTerkini = 0
-    private var jawabanBenarList = mutableListOf<String>()
-    private var jumlahBenar = 0
-    private var jumlahSalah = 0
+
+    private lateinit var latihanHurufViewModel: LatihanHurufViewModel
+    private lateinit var latihanKataViewModel: LatihanKataViewModel
+
     private lateinit var soalList: List<SoalVideo>
     private lateinit var youTubePlayerView: YouTubePlayerView
     private var youTubePlayer: YouTubePlayer? = null
+    private var indexTerkini = 0
     private var indexYangDipilih = -1
     private lateinit var optionCards: List<CardView>
     private lateinit var optionImages: List<ImageView>
+    private var jumlahBenar = 0
+    private var jumlahSalah = 0
+    private var jawabanBenarList = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,22 +52,43 @@ class FragmentSoalLatihanVideos : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         sharedPreferences = requireContext().getSharedPreferences("judul", Context.MODE_PRIVATE)
-        setupViewModel()
-        setupYouTubePlayer()
-        loadLatihanIdAndSoal()
-        setupListeners()
+        val judul = sharedPreferences.getString("judulLatihanTampil", "Latihan Huruf") ?: ""
+        val latihanId = sharedPreferences.getInt("latihanId", -1)
+
+        binding.textJudul.text = judul
+        Log.d("SoalLatihan", "Judul tampil = $judul")
 
         optionCards = listOf(binding.option1, binding.option2, binding.option3, binding.option4)
         optionImages = listOf(binding.imgOptionA!!, binding.imgOptionB!!, binding.imgOptionC!!, binding.imgOptionD!!)
 
-        val judul = sharedPreferences.getString("judulLatihanTampil", "Latihan Huruf")
-        Log.d("SoalLatihan", "Judul tampil = $judul")
-        binding.textJudul.text = judul
-    }
+        setupYouTubePlayer()
+        setupListeners()
 
-    private fun setupViewModel() {
-        latihanHurufViewModel = ViewModelProvider(this)[LatihanHurufViewModel::class.java]
+        if (latihanId != -1) {
+            if (judul.contains("Kata", ignoreCase = true)) {
+                // Latihan Kata
+                latihanKataViewModel = ViewModelProvider(this)[LatihanKataViewModel::class.java]
+                latihanKataViewModel.loadSoalKata(latihanId)
+                latihanKataViewModel.soalVideos.observe(viewLifecycleOwner) { list ->
+                    if (list.isNotEmpty()) {
+                        soalList = list
+                        tampilkanSoal(soalList[indexTerkini])
+                    }
+                }
+            } else {
+                // Latihan Huruf
+                latihanHurufViewModel = ViewModelProvider(this)[LatihanHurufViewModel::class.java]
+                latihanHurufViewModel.loadSoalVideo(latihanId)
+                latihanHurufViewModel.soalVideos.observe(viewLifecycleOwner) { list ->
+                    if (list.isNotEmpty()) {
+                        soalList = list
+                        tampilkanSoal(soalList[indexTerkini])
+                    }
+                }
+            }
+        }
     }
 
     private fun setupYouTubePlayer() {
@@ -76,19 +101,6 @@ class FragmentSoalLatihanVideos : Fragment() {
                 }
             }
         })
-    }
-
-    private fun loadLatihanIdAndSoal() {
-        val latihanId = sharedPreferences.getInt("latihanId", -1)
-        if (latihanId != -1) {
-            latihanHurufViewModel.loadSoalVideo(latihanId)
-        }
-        latihanHurufViewModel.soalVideos.observe(viewLifecycleOwner) { list ->
-            if (list.isNotEmpty()) {
-                soalList = list
-                tampilkanSoal(soalList[indexTerkini])
-            }
-        }
     }
 
     private fun setupListeners() {
@@ -130,7 +142,14 @@ class FragmentSoalLatihanVideos : Fragment() {
     }
 
     private fun tampilkanSoal(soal: SoalVideo) {
-        youTubePlayer?.cueVideo(extractYoutubeId(soal.media_url), 0f)
+        Log.d("DEBUG_YOUTUBE", "media_url = ${soal.media_url}")
+        Log.d("DEBUG_YOUTUBE", "Extracted ID = ${extractYoutubeId(soal.media_url)}")
+        val youtubeId = extractYoutubeId(soal.media_url)
+        if (youtubeId.isNotBlank()) {
+            youTubePlayer?.cueVideo(youtubeId, 0f)
+        } else {
+            Log.e("DEBUG_YOUTUBE", "YouTube ID tidak valid dari URL: ${soal.media_url}")
+        }
 
         Glide.with(this).load(soal.opsi_a).into(binding.imgOptionA!!)
         Glide.with(this).load(soal.opsi_b).into(binding.imgOptionB!!)

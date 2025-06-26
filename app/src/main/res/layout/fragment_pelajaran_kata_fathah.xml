@@ -81,7 +81,7 @@
                 android:id="@+id/cs_ly1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/cs_ly2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +92,6 @@
                     android:id="@+id/image_speaker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:src="@drawable/baseline_volume_up_24"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -101,14 +100,13 @@
                     android:id="@+id/tv_perhatikan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-
                     android:layout_marginEnd="62dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="Perhatikan Bacaan Berikut!"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@id/image_speaker"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,9 +125,10 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cs_ly2"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_280sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -147,10 +146,8 @@
                     android:id="@+id/text_penjelasan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Perhatikan tulisan \n berharakat!"
+                    android:text="Perhatikan tulisan berharakat!"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/img_edit"
@@ -158,17 +155,21 @@
 
                 <FrameLayout
                     android:id="@+id/frameLayout"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="200dp"
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_110sdp"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/shape_bg_pelajaran_video"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintStart_toEndOf="@+id/detail"
+                    app:layout_constraintTop_toBottomOf="@+id/text_penjelasan">
 
                     <ImageView
                         android:id="@+id/gambarPelajaran"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/alif_fathah_biru_muda" />
                 </FrameLayout>
 
@@ -176,9 +177,9 @@
                     android:id="@+id/detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="40dp"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="Warna Hitam merupakan \nhuruf Mim,Lam, dan Kaf yang \ndirangkai dan yang berwarna \nbiru terang adalah harakat \nFathah."
+                    android:text="Warna Hitam merupakan \n huruf Ha, Sin,dan Ba yang di \nrangkai dan yang berwarna \nbiru terang adalah harakat \nFathah, dan yang berwarna \nhijau adalah harakat kasrah"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"

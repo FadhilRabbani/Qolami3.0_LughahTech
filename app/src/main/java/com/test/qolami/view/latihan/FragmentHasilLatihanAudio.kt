@@ -1,5 +1,6 @@
 package com.test.qolami.view.latihan
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,8 +32,18 @@ class FragmentHasilLatihanAudio : Fragment() {
         binding.nilaiBenar.text = jumlahBenar.toString()
         binding.nilaiSalah.text = jumlahSalah.toString()
 
+        // 🔁 Ambil shared preferences untuk menentukan apakah latihan ini "kata" atau "huruf"
+        val sharedPrefs = requireContext().getSharedPreferences("judul", Context.MODE_PRIVATE)
+        val isKata = sharedPrefs.getBoolean("isKata", false) // ← Tambahan baru
+
         binding.btnLanjutkan.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentHasilLatihanAudio_to_fragmentDetailLatihanHuruf)
+            if (isKata) {
+                // 👉 Jika latihan kata, navigasi ke fragment detail kata
+                findNavController().navigate(R.id.action_fragmentHasilLatihanAudio_to_fragmentLatihanKata)
+            } else {
+                // 👉 Jika latihan huruf, navigasi ke fragment detail huruf
+                findNavController().navigate(R.id.action_fragmentHasilLatihanAudio_to_fragmentLatihanHuruf)
+            }
         }
     }
 }

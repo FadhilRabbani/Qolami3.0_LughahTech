@@ -56,8 +56,12 @@ class HomeFragment : Fragment() {
             }
         }
         binding.buttonQuiz.setOnClickListener {
-            val popUpFiturFragment = PopUpFiturSedangDikembankanFragment()
-            popUpFiturFragment.show(childFragmentManager, "popupfitur")
+            if (getToken.isEmpty()) {
+                val popUpAkun = PopUpAkunFragment()
+                popUpAkun.show(childFragmentManager,"popupakun")
+            }else {
+                findNavController().navigate(R.id.action_homeFragment_to_listKuis)
+            }
         }
     }
     private fun checkSudahLogin(){

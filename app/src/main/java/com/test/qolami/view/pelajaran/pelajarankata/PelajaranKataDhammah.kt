@@ -29,7 +29,7 @@ class PelajaranKataDhammah : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.gambarPelajaran.setImageResource(R.drawable.hasiba)
+        binding.gambarPelajaran.setImageResource(R.drawable.kamula)
 
         val youtubeId = "DazWszf03DE"
         lifecycle.addObserver(binding.ytPlayer)

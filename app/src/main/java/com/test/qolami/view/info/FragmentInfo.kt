@@ -32,12 +32,12 @@ class FragmentInfo : Fragment() {
         binding.imageBack.setOnClickListener {
             findNavController().navigateUp()
         }
-        binding.ivTiktok.setOnClickListener{
+        binding.ivTiktok?.setOnClickListener{
             val ttLink = "https://www.tiktok.com/@metode_qolami?_t=8kmdKPWd0GC&_r=1"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ttLink))
             startActivity(intent)
         }
-        binding.ivYoutube.setOnClickListener {
+        binding.ivYoutube?.setOnClickListener {
             val ytLink = "https://www.youtube.com/@qolamichanel9019"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ytLink))
             startActivity(intent)

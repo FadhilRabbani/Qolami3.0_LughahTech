@@ -32,8 +32,7 @@ class FragmentLatihan : Fragment() {
         findNavController().navigate(R.id.action_fragmentLatihan_to_fragmentLatihanHuruf)
         }
         binding.btnKata.setOnClickListener {
-            val popUpFiturFragment = PopUpFiturSedangDikembankanFragment()
-            popUpFiturFragment.show(childFragmentManager, "popupfitur")
+            findNavController().navigate(R.id.action_fragmentLatihan_to_fragmentLatihanKata)
         }
         binding.btnRangkaian.setOnClickListener {
             val popUpFiturFragment = PopUpFiturSedangDikembankanFragment()

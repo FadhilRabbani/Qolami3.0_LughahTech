@@ -45,40 +45,5 @@ class FragmentLatihanHuruf : Fragment() {
             latihanHurufAdapter.dataHuruf = it as ArrayList<DataLatihanHuruf>
             latihanHurufAdapter.notifyDataSetChanged()
         }
-//    private lateinit var binding: FragmentLatihanHurufBinding
-//    private lateinit var latihanHurufViewModel: LatihanHurufViewModel
-//    private lateinit var latihanHurufAdapter: LatihanHurufAdapter
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        binding = FragmentLatihanHurufBinding.inflate(inflater, container, false)
-//        return binding.root
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        binding.imageBack.setOnClickListener {
-//            findNavController().navigate(R.id.action_fragmentLatihanHuruf_to_fragmentLatihan)
-//        }
-//        setupRecyclerView()
-//        observeData()
-//    }
-//
-//    private fun setupRecyclerView() {
-//        latihanHurufViewModel = ViewModelProvider(this)[LatihanHurufViewModel::class.java]
-//        latihanHurufAdapter = LatihanHurufAdapter(ArrayList())
-//        binding.rcCon.layoutManager = LinearLayoutManager(requireContext())
-//        binding.rcCon.adapter = latihanHurufAdapter
-//        latihanHurufViewModel.getListLatihan()
-//    }
-//
-//    private fun observeData() {
-//        latihanHurufViewModel.dataLatihanList.observe(viewLifecycleOwner) {
-//            if (it != null) {
-//                latihanHurufAdapter.setData(it)
-//            }
-//        }
-//    }
-}}
+    }
+}

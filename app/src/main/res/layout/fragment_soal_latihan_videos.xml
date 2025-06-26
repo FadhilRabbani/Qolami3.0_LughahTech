@@ -97,53 +97,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="20dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yt_player">
 
 
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/option_1"
-            android:layout_width="140dp"
-            android:layout_height="78dp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_marginTop="10dp"
             app:cardCornerRadius="20dp"
             app:layout_constraintEnd_toStartOf="@+id/option_2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-<!--            <TextView-->
-<!--                android:id="@+id/txt_jawaban1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:fontFamily="@font/calibribold"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="40sp">-->
-
-<!--            </TextView>-->
             <ImageView
                 android:id="@+id/imgOptionA"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ain_dammahtain" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/option_2"
-            android:layout_width="140dp"
-            app:cardCornerRadius="20dp"
-            android:layout_height="78dp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_marginTop="10dp"
+            app:cardCornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/option_1"
-            app:layout_constraintTop_toTopOf="parent"  >
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <ImageView
@@ -151,21 +142,21 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ain_dammahtain" />
 
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/option_3"
-            android:layout_width="140dp"
-            android:layout_height="78dp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_marginTop="20dp"
             app:cardCornerRadius="20dp"
             app:layout_constraintEnd_toStartOf="@+id/option_4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/option_1" >
+            app:layout_constraintTop_toBottomOf="@+id/option_1">
 
 
             <ImageView
@@ -173,20 +164,20 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ain_dammahtain" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/option_4"
-            android:layout_width="140dp"
-            android:layout_height="78dp"
-            app:cardCornerRadius="20dp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/option_3"
-            app:layout_constraintTop_toBottomOf="@+id/option_2" >
+            app:layout_constraintTop_toBottomOf="@+id/option_2">
 
 
             <ImageView
@@ -194,11 +185,12 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ain_dammahtain" />
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_check_soal"
         style="@style/Widget.MaterialComponents.Button"
@@ -208,7 +200,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:backgroundTint="#458200"
-        android:text="Check"
+        android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

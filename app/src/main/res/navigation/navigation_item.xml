@@ -19,8 +19,8 @@
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_loginFragment_to_lupaPasswordFragment"
-            app:destination="@id/lupaPasswordFragment" />
+            android:id="@+id/action_loginFragment_to_send_otp"
+            app:destination="@id/fragmentSendOTP"/>
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -29,17 +29,6 @@
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/lupaPasswordFragment"
-        android:name="com.test.qolami.view.user.LupaPasswordFragment"
-        android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_lupa_password" >
-        <action
-            android:id="@+id/action_lupaPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
@@ -61,6 +50,9 @@
         <action
             android:id="@+id/action_homeFragment_to_akunFragment"
             app:destination="@id/akunFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_listKuis"
+            app:destination="@id/fragmentListKuis"/>
     </fragment>
     <fragment
         android:id="@+id/onBoardingMangerFragment"
@@ -161,6 +153,24 @@
         <action
             android:id="@+id/action_fragmentLatihan_to_fragmentLatihanHuruf"
             app:destination="@id/fragmentLatihanHuruf" />
+        <action
+            android:id="@+id/action_fragmentLatihan_to_fragmentLatihanKata"
+            app:destination="@+id/fragmentLatihanKata"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentLatihanKata"
+        android:name="com.test.qolami.view.latihan.FragmentLatihanKata"
+        android:label="fragment_latihan_kata"
+        tools:layout="@layout/fragment_latihan_kata">
+
+        <action
+            android:id="@+id/action_fragmentLatihanKata_to_FragmentDetailLatihanKata"
+            app:destination="@+id/fragmentDetailLatihanKata"
+            app:popUpTo="@id/fragmentDetailLatihanKata"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_fragmentLatihanKata_to_fragmentLatihan"
+            app:destination="@+id/fragmentLatihan"/>
     </fragment>
     <fragment
         android:id="@+id/fragmentLatihanHuruf"
@@ -169,7 +179,9 @@
         tools:layout="@layout/fragment_latihan_huruf" >
         <action
             android:id="@+id/action_fragmentLatihanHuruf_to_fragmentDetailLatihanHuruf"
-            app:destination="@id/fragmentDetailLatihanHuruf" />
+            app:destination="@id/fragmentDetailLatihanHuruf"
+            app:popUpTo="@id/fragmentDetailLatihanHuruf"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_fragmentLatihanHuruf_to_fragmentLatihan"
             app:destination="@id/fragmentLatihan" />
@@ -179,9 +191,6 @@
         android:name="com.test.qolami.view.latihan.FragmentDetailLatihanHuruf"
         android:label="fragment_detail_latihan_huruf"
         tools:layout="@layout/fragment_detail_latihan_huruf" >
-        <action
-            android:id="@+id/action_fragmentDetailLatihanHuruf_to_fragmentSoalLatihanImage"
-            app:destination="@id/fragmentSoalLatihanImage" />
         <action
             android:id="@+id/action_fragmentDetailLatihanHuruf_to_fragmentLatihanHuruf"
             app:destination="@id/fragmentLatihanHuruf" />
@@ -193,29 +202,19 @@
             app:destination="@id/fragmentSoalLatihanAudio" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentSoalLatihanImage"
-        android:name="com.test.qolami.view.latihan.FragmentSoalLatihanImage"
-        android:label="fragment_soal_latihan_image"
-        tools:layout="@layout/fragment_soal_latihan_image" >
+        android:id="@+id/fragmentDetailLatihanKata"
+        android:name="com.test.qolami.view.latihan.FragmentDetailLatihanKata"
+        android:label="fragment_detail_latihan_kata"
+        tools:layout="@layout/fragment_detail_latihan_kata">
         <action
-            android:id="@+id/action_fragmentSoalLatihanImage_to_fragmentHasilLatihan"
-            app:destination="@id/fragmentHasilLatihan"
-            app:popUpTo="@id/fragmentSoalLatihanImage"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_fragmentDetailLatihanKata_to_fragmentSoalLatihanVideo"
+            app:destination="@id/fragmentSoalLatihanVideos"/>
         <action
-            android:id="@+id/action_fragmentSoalLatihanImage_to_fragmentDetailLatihanHuruf"
-            app:destination="@id/fragmentDetailLatihanHuruf" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentHasilLatihan"
-        android:name="com.test.qolami.view.latihan.FragmentHasilLatihan"
-        android:label="fragment_hasil_latihan"
-        tools:layout="@layout/fragment_hasil_latihan" >
+            android:id="@+id/action_fragmentDetailLatihanKata_to_fragmentSoalLatihanAudio"
+            app:destination="@+id/fragmentSoalLatihanAudio"/>
         <action
-            android:id="@+id/action_fragmentHasilLatihan_to_fragmentDetailLatihanHuruf"
-            app:destination="@id/fragmentDetailLatihanHuruf"
-            app:popUpTo="@id/fragmentDetailLatihanHuruf"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_fragmentDetailLatihanKata_to_fragmentLatihanKata"
+            app:destination="@id/fragmentLatihanKata"/>
     </fragment>
     <fragment
         android:id="@+id/fragmentSoalLatihanVideos"
@@ -237,10 +236,17 @@
         android:label="fragment_hasil_latihan_videos"
         tools:layout="@layout/fragment_hasil_latihan_videos" >
         <action
-            android:id="@+id/action_fragmentHasilLatihanVideos_to_fragmentDetailLatihanHuruf"
-            app:destination="@id/fragmentDetailLatihanHuruf"
+            android:id="@+id/action_fragmentHasilLatihanVideos_to_fragmentLatihanHuruf"
+            app:destination="@id/fragmentLatihanHuruf"
             app:popUpTo="@id/fragmentHasilLatihanVideos"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"/>
+        <action
+            android:id="@+id/action_fragmentHasilLatihanVideos_to_fragmentLatihanKata"
+            app:destination="@+id/fragmentLatihanKata"
+            app:popUpTo="@id/fragmentHasilLatihanVideos"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"/>
     </fragment>
     <fragment
         android:id="@+id/akunFragment"
@@ -248,28 +254,21 @@
         android:label="fragment_akun"
         tools:layout="@layout/fragment_akun" >
         <action
-            android:id="@+id/action_akunFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_akunFragment_to_fragmentInfo"
             app:destination="@id/fragmentInfo" />
-        <action
-            android:id="@+id/action_akunFragment_to_resetPasswordFragment"
-            app:destination="@id/resetPasswordFragment" />
         <action
             android:id="@+id/action_akunFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/akunFragment"
             app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.test.qolami.view.account.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_akunFragment"
-            app:destination="@id/akunFragment" />
+            android:id="@+id/action_akunFragment_to_sendOTP"
+            app:destination="@id/fragmentSendOTP"/>
+        <action
+            android:id="@+id/action_akunFragment_to_ProfileFragment"
+            app:destination="@+id/fragmentProfile"
+            app:popUpTo="@layout/fragment_profile"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/fragmentInfo"
@@ -280,17 +279,6 @@
             android:id="@+id/action_fragmentInfo_to_akunFragment"
             app:destination="@id/akunFragment"
             app:popUpTo="@id/fragmentInfo"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/resetPasswordFragment"
-        android:name="com.test.qolami.view.user.ResetPasswordFragment"
-        android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password" >
-        <action
-            android:id="@+id/action_resetPasswordFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/resetPasswordFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -310,15 +298,21 @@
         android:label="fragment_hasil_latihan_audio"
         tools:layout="@layout/fragment_hasil_latihan_audio" >
         <action
-            android:id="@+id/action_fragmentHasilLatihanAudio_to_fragmentDetailLatihanHuruf"
-            app:destination="@id/fragmentDetailLatihanHuruf"
+            android:id="@+id/action_fragmentHasilLatihanAudio_to_fragmentLatihanHuruf"
+            app:destination="@id/fragmentLatihanHuruf"
             app:popUpTo="@id/fragmentHasilLatihanAudio"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_fragmentHasilLatihanAudio_to_fragmentLatihanKata"
+            app:destination="@+id/fragmentLatihanKata"
+            app:popUpTo="@id/fragmentHasilLatihanAudio"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/fragmentPelajaranKata"
         android:name="com.test.qolami.view.pelajaran.PelajaranKataFragment"
-        android:label="fragment_pelajaran_kata">
+        android:label="fragment_pelajaran_kata"
+        tools:layout="@layout/fragment_pelajaran_kata">
         <action
             android:id="@+id/action_fragmentpelajaranKata_to_fragmentPelajaranFathah"
             app:destination="@+id/fragmentKataFathah"/>
@@ -326,7 +320,8 @@
     <fragment
         android:id="@+id/fragmentKataFathah"
         android:name="com.test.qolami.view.pelajaran.pelajarankata.PelajaranKataFathah"
-        android:label="fragment_pelajaran_fathah">
+        android:label="fragment_pelajaran_fathah"
+        tools:layout="@layout/fragment_pelajaran_kata_fathah">
         <action
             android:id="@+id/action_fathah_to_kasrah"
             app:destination="@id/fragmentKataKasrah"
@@ -341,7 +336,8 @@
     <fragment
         android:id="@+id/fragmentKataKasrah"
         android:name="com.test.qolami.view.pelajaran.pelajarankata.PelajaranKataKasrah"
-        android:label="fragment_pelajaran_kasrah">
+        android:label="fragment_pelajaran_kasrah"
+        tools:layout="@layout/fragment_pelajaran_kata_kasrah">
         <action
             android:id="@+id/action_kasrah_to_fathah"
             app:destination="@+id/fragmentKataFathah"
@@ -356,7 +352,8 @@
     <fragment
         android:id="@+id/fragmentDhammah"
         android:name="com.test.qolami.view.pelajaran.pelajarankata.PelajaranKataDhammah"
-        android:label="fragment_pelajaran_dhammah">
+        android:label="fragment_pelajaran_dhammah"
+        tools:layout="@layout/fragment_pelajaran_kata_dhammah">
         <action
             android:id="@+id/action_dhammah_to_fathah"
             app:destination="@+id/fragmentKataFathah"
@@ -367,5 +364,97 @@
             app:destination="@+id/fragmentKataKasrah"
             app:popUpTo="@id/fragmentPelajaranKata"
             app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentKuis"
+        android:name="com.test.qolami.view.kuis.FragmentKuisUniversal"
+        android:label="fragment_kuis_universal"
+        tools:layout="@layout/fragment_kuis_universal">
+        <action
+            android:id="@+id/action_kuis_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_kuis_to_hasil_kuis"
+            app:destination="@id/fragmentHasilKuis"
+            app:popUpTo="@id/fragmentHasilKuis"
+            app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentHasilKuis"
+        android:name="com.test.qolami.view.kuis.FragmentHasilKuis"
+        android:label="fragment_hasil_kuis"
+        tools:layout="@layout/fragment_hasil_kuis">
+        <action
+            android:id="@+id/action_hasil_kuis_to_listKuis"
+            app:destination="@id/fragmentListKuis"
+            app:popUpTo="@id/fragmentListKuis"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSendOTP"
+        android:name="com.test.qolami.view.user.FragmentSendOtp"
+        android:label="fragment_send_otp"
+        tools:layout="@layout/fragment_send_otp">
+        <action
+            android:id="@+id/action_send_otp_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_send_otp_to_akun"
+            app:destination="@id/akunFragment"
+            app:popUpTo="@id/akunFragment"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_send_otp_to_change_password"
+            app:destination="@id/fragmentChangePassword"
+            app:popUpTo="@id/fragmentChangePassword"
+            app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentChangePassword"
+        android:name="com.test.qolami.view.user.FragmentChangePassword"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password">
+        <action
+            android:id="@+id/action_change_password_to_send_otp"
+            app:destination="@+id/fragmentSendOTP"
+            app:popUpTo="@layout/fragment_change_password"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_change_password_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_change_password_to_akun"
+            app:destination="@id/akunFragment"
+            app:popUpTo="@id/akunFragment"
+            app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentListKuis"
+        android:name="com.test.qolami.view.kuis.FragmentListKuis"
+        android:label="fragment_list_kuis"
+        tools:layout="@layout/fragment_list_kuis">
+        <action
+            android:id="@+id/action_list_kuis_to_kuis"
+            app:destination="@+id/fragmentKuis"/>
+        <action
+            android:id="@+id/action_list_kuis_to_home"
+            app:destination="@id/homeFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.test.qolami.view.account.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_AkunFragment"
+            app:destination="@+id/akunFragment"
+            app:popUpTo="@id/akunFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

@@ -20,7 +20,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "http://192.168.1.10:8000/api/"
+    private const val BASE_URL = "http://192.168.69.162:8000/api/"
 
     @Provides
     @Singleton
@@ -44,6 +44,14 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
+    }
+    @Provides
+    @Singleton
+    @Named("unauthenticated_client")
+    fun provideUnauthenticatedRetrofitClient(
+        @Named("unauthenticated") retrofit: Retrofit
+    ): RetrofitClient {
+        return RetrofitClient(retrofit)
     }
 
     @Provides
@@ -79,4 +87,13 @@ object NetworkModule {
     fun provideRetrofitClient(@Named("authenticated") retrofit: Retrofit): RetrofitClient {
         return RetrofitClient(retrofit)
     }
+    @Provides
+    @Singleton
+    @Named("authenticated_client")
+    fun provideAuthenticatedRetrofitClient(
+        @Named("authenticated") retrofit: Retrofit
+    ): RetrofitClient {
+        return RetrofitClient(retrofit)
+    }
+
 }

@@ -7,43 +7,16 @@
     android:background="@color/warna_hijau_tua"
     tools:context=".view.user.RegisterFragment">
 
+
     <ImageView
         android:id="@+id/Tombol_Back"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/ic_panah_kembali_putih"
-        app:layout_constraintBottom_toBottomOf="@id/tv_register"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_register" />
-
-    <TextView
-        android:id="@+id/tv_register"
-        style="@style/TextAppearance.Material3.TitleLarge"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/nunito_extrabold"
-        android:text="Daftar"
-        android:textColor="@color/white"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/Tombol_Back"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_register_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:text="Buat akunmu sekarang juga!"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_register" />
 
     <LinearLayout
         android:id="@+id/ll_register"
@@ -57,10 +30,38 @@
         app:layout_constraintHeight_percent="0.85">
 
         <TextView
+            android:id="@+id/tv_register"
+            style="@style/TextAppearance.Material3.TitleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="Daftar"
+            android:textStyle="bold"
+            android:textColor="@color/warna_hijau_tua"
+            android:textSize="@dimen/_24ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/Tombol_Back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_register_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Buat akunmu sekarang juga!"
+            android:textColor="@color/warna_hijau_tua"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_register" />
+
+        <TextView
             android:id="@+id/tv_namalengkap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama Lengkap"
+            android:text="Username"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -69,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            app:boxBackgroundMode="none"
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -76,7 +78,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bg"
-                android:hint="Nama Lengkap"
+                android:hint="Contoh username"
+                android:gravity="start|center_vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            app:boxBackgroundMode="none"
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -100,7 +106,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bg"
-                android:hint="Username"
+                android:hint="contoh@example.com"
+                android:gravity="start|center_vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,6 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            app:boxBackgroundMode="none"
             app:endIconMode="password_toggle"
             app:hintEnabled="false">
 
@@ -127,6 +137,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bg"
                 android:hint="Buat Password"
+                android:gravity="start|center_vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
@@ -143,6 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            app:boxBackgroundMode="none"
             app:endIconMode="password_toggle"
             app:hintEnabled="false">
 
@@ -152,6 +166,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_bg"
                 android:hint="Konfirmasi Password"
+                android:gravity="start|center_vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -185,5 +202,18 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kembali"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_8ssp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/Tombol_Back"
+        app:layout_constraintStart_toEndOf="@+id/Tombol_Back"
+        app:layout_constraintTop_toTopOf="@+id/Tombol_Back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

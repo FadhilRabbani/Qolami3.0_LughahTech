@@ -16,6 +16,7 @@ import com.test.qolami.databinding.FragmentRegisterBinding
 import com.test.qolami.model.data.user.Data
 import com.test.qolami.model.data.user.RegisterRequest
 import com.test.qolami.model.network.RetrofitClient
+import com.test.qolami.view.common.LoadingDialogFragment
 //import com.test.qolami.viewnodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private lateinit var binding:FragmentRegisterBinding
-//    private lateinit var userVM: UserViewModel
+    private var loadingDialog: LoadingDialogFragment? = null
     private lateinit var sharedPreferences: SharedPreferences
     @Inject
     lateinit var retrofitClient: RetrofitClient
@@ -72,9 +73,13 @@ class RegisterFragment : Fragment() {
             password = password,
             password_confirmation = confirmPassword
         )
+        loadingDialog = LoadingDialogFragment.newInstance("Mendaftarkan akun...")
+        loadingDialog?.show(parentFragmentManager, "loading")
+
+        binding.buttonDaftar.isEnabled = false
         lifecycleScope.launch {
             try {
-                val response = retrofitClient.apiService.registerUser(request)  // Gunakan apiService yang sudah disuntikkan
+                val response = retrofitClient.apiService.registerUser(request)
                 if (response.isSuccessful) {
                     Toast.makeText(requireContext(), "Registrasi berhasil", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
@@ -83,21 +88,11 @@ class RegisterFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            }finally {
+                loadingDialog?.dismiss()
+                binding.buttonDaftar.isEnabled = true
             }
         }
-//        lifecycleScope.launch {
-//            try {
-//                val response = RetrofitClient.instance.registerUser(request)
-//                if (response.isSuccessful) {
-//                    Toast.makeText(requireContext(), "Registrasi berhasil", Toast.LENGTH_SHORT).show()
-//                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-//                } else {
-//                    Toast.makeText(requireContext(), "Registrasi gagal: ${response.errorBody()?.string()}", Toast.LENGTH_SHORT).show()
-//                }
-//            } catch (e: Exception) {
-//                Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
-//            }
-//        }
     }
 
 

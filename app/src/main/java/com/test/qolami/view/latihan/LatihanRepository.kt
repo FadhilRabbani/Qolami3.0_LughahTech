@@ -2,6 +2,9 @@ package com.test.qolami.view.latihan
 
 import com.test.qolami.model.network.RestfulApi
 import com.test.qolami.model.network.RetrofitClient
+import com.test.qolami.view.kuis.JawabanRequest
+import com.test.qolami.view.kuis.KuisResponse
+import com.test.qolami.view.kuis.SubmitJawabanResponse
 import com.test.qolami.view.latihan.DataLatihan.SoalAudioResponse
 import com.test.qolami.view.latihan.DataLatihan.SoalLatihanResponse
 import com.test.qolami.view.latihan.DataLatihan.SoalVideo
@@ -11,7 +14,7 @@ import javax.inject.Singleton
 
 @Singleton
 class LatihanRepository @Inject constructor(
-    private val retrofitClient: RetrofitClient  // Mendapatkan RetrofitClient dari Hilt
+    private val retrofitClient: RetrofitClient
 ) {
     suspend fun getSoalLatihanVideo(latihanId: Int): Response<SoalLatihanResponse> {
         return retrofitClient.apiService.getSoalLatihanVideo(latihanId)
@@ -20,26 +23,13 @@ class LatihanRepository @Inject constructor(
     suspend fun getSoalLatihanAudio(latihanId: Int): Response<SoalAudioResponse> {
         return retrofitClient.apiService.getSoalLatihanAudio(latihanId)
     }
-}
-//    suspend fun getSoalLatihan(latihanId: Int, jenis: String): List<SoalVideo> {
-//        // Mengambil response dari API
-//        val response = retrofitClient.apiService.getSoalLatihan(latihanId, jenis)
-//
-//        // Mengecek apakah response berhasil dan mengembalikan body (data) dari response
-//        if (response.isSuccessful) {
-//            return response.body() ?: emptyList() // Kembalikan data atau list kosong jika body null
-//        } else {
-//            throw Exception("Error: ${response.code()}")
-//        }
-//    }
+    suspend fun getSoalKuis(kategori: String, kuisId: Int): Response<KuisResponse> {
+        return retrofitClient.apiService.getSoalKuis(kategori, kuisId)
+    }
+    suspend fun submitJawabanKuis(jawabanRequest: JawabanRequest): Response<SubmitJawabanResponse> {
+        return retrofitClient.apiService.submitJawabanKuis(jawabanRequest)
+    }
 
-//class LatihanRepository @Inject constructor(private val apiService: RestfulApi.ApiService) {
-//
-//    suspend fun getSoalVideo(latihanId: Int): List<SoalVideo>? {
-//        val response = apiService.getSoalLatihan(latihanId, "video")
-//        if (response.isSuccessful) {
-//            return response.body()
-//        }
-//        return null
-//    }
-//}
+
+}
+

@@ -57,14 +57,16 @@
         app:boxBackgroundMode="none"
         android:layout_marginTop="5dp">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_namalengkap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_bg"
-        android:hint="Nama Lengkap"
-        android:enabled="false"
-        android:inputType="text" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_namalengkap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_bg"
+            android:gravity="start|center_vertical"
+            android:paddingTop=   "@dimen/_15sdp"
+            android:paddingBottom="@dimen/_15sdp"
+            android:enabled="false" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

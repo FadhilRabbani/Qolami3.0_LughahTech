@@ -1,0 +1,7 @@
+<!-- res/drawable/bg_rounded.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#458200" /> <!-- warna latar -->
+    <corners android:radius="16dp" /> <!-- radius rounded -->
+</shape>

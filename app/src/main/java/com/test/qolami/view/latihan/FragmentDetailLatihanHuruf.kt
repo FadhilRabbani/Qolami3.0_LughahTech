@@ -13,21 +13,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.test.qolami.R
 import com.test.qolami.databinding.FragmentDetailLatihanHurufBinding
-//import com.test.qolami.viewnodel.ScoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class FragmentDetailLatihanHuruf : Fragment() {
     private lateinit var binding: FragmentDetailLatihanHurufBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferences2: SharedPreferences
-//    private lateinit var scoreViewModel: ScoreViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentDetailLatihanHurufBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -43,9 +40,11 @@ class FragmentDetailLatihanHuruf : Fragment() {
             findNavController().navigate(R.id.action_fragmentDetailLatihanHuruf_to_fragmentLatihanHuruf)
         }
 
+        // Ambil latihanId dari argument bundle
         val latihanId = arguments?.getInt("latihanId", -1) ?: -1
         sharedPreferences.edit().putInt("latihanId", latihanId).apply()
 
+        // Data untuk menampilkan judul dan latihan
         val latihan = arguments?.getString("latihan")
         val judulLatihan = arguments?.getString("judulLatihan")
         val judulLatihanVideos = arguments?.getString("judulLatihanVideos")
@@ -65,14 +64,20 @@ class FragmentDetailLatihanHuruf : Fragment() {
 
         // Navigasi saat klik video
         binding.ivLatihanVideo.setOnClickListener {
-            val editor = sharedPreferences.edit()
-            editor.putString("latihanVideo", namaHuruf)
-            editor.putString("judulLatihanTampil", judulTampil)
-            editor.apply()
+            val latihanId = sharedPreferences.getInt("latihanId", -1)
+            if (latihanId != -1) {
+                val editor = sharedPreferences.edit()
+                editor.putString("latihanVideo", namaHuruf)
+                editor.putString("judulLatihanTampil", judulTampil)
+                editor.apply()
 
-            Log.d("SharedPref", "judulLatihanTampil = $judulTampil")
-            findNavController().navigate(R.id.action_fragmentDetailLatihanHuruf_to_fragmentSoalLatihanVideos)
+                Log.d("SharedPref", "judulLatihanTampil = $judulTampil")
+                findNavController().navigate(R.id.action_fragmentDetailLatihanHuruf_to_fragmentSoalLatihanVideos)
+            } else {
+                Log.e("FragmentDetailLatihanHuruf", "latihanId tidak ditemukan atau tidak valid!")
+            }
         }
+
 
         // Navigasi saat klik audio
         binding.ivLatihanAudio.setOnClickListener {
@@ -92,4 +97,31 @@ class FragmentDetailLatihanHuruf : Fragment() {
             findNavController().navigate(R.id.action_fragmentDetailLatihanHuruf_to_fragmentSoalLatihanAudio)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        val latihanId = sharedPreferences.getInt("latihanId", -1)
+        if (latihanId != -1) {
+            // Memuat soal berdasarkan latihanId
+            loadSoal(latihanId)
+        } else {
+            Log.e("FragmentDetailLatihanHuruf", "latihanId tidak ditemukan!")
+        }
+    }
+
+    private fun loadSoal(latihanId: Int) {
+        when (latihanId) {
+            1 -> {
+                // Logika untuk memuat soal video/audio
+                Log.d("FragmentDetailLatihanHuruf", "Memuat soal video untuk latihanId $latihanId")
+            }
+            2 -> {
+                // Logika untuk memuat soal lainnya
+            }
+            else -> {
+                Log.e("FragmentDetailLatihanHuruf", "latihanId tidak dikenal: $latihanId")
+            }
+        }
+    }
+
 }

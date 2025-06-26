@@ -115,6 +115,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cs_ly1">
 
@@ -130,10 +131,8 @@
             android:id="@+id/text_penjelasan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
             android:fontFamily="@font/montserrat_bold"
-            android:text="Perhatikan tulisan \n berharakat!"
+            android:text="Perhatikan tulisan berharakat!"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/img_edit"
@@ -144,14 +143,18 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginStart="200dp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/shape_bg_pelajaran_video"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/text_penjelasan">
 
             <ImageView
                 android:id="@+id/gambarPelajaran"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width= "@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:src="@drawable/alif_fathah_biru_muda" />
         </FrameLayout>
 
@@ -161,7 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat_regular"
-            android:text="Warna Hitam merupakan \n huruf Ba dan yang berwarna \n biru terang adalah harakat \nFathah."
+            android:text="Warna Hitam merupakan \nhuruf Ba dan yang berwarna \nbiru terang adalah harakat \nFathah."
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.test.qolami.R
 import com.test.qolami.databinding.FragmentAkunBinding
+import com.test.qolami.view.home.PopUpFiturSedangDikembankanFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,10 +37,14 @@ class AkunFragment : Fragment() {
         }
         if (token.isNotEmpty()){
             binding.llProfile.setOnClickListener {
-                findNavController().navigate(R.id.action_akunFragment_to_profileFragment)
+                findNavController().navigate(R.id.action_akunFragment_to_ProfileFragment)
             }
             binding.llChangePassword.setOnClickListener{
-                findNavController().navigate((R.id.action_akunFragment_to_resetPasswordFragment))
+                val bundle = Bundle().apply {
+                    putString("source_fragment", "setting")
+                }
+                findNavController().navigate(R.id.action_akunFragment_to_sendOTP, bundle)
+
             }
             binding.llLogout.setOnClickListener {
                 sharedPreferences.edit().remove("token").apply()

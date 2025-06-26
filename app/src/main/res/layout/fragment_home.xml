@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/nunito_extrabold"
-            android:text="Ilhamian"
+            android:text="Tamu"
             android:textColor="@color/warna_hijau_tua"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"

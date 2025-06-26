@@ -87,9 +87,24 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.Quiz -> {
-                    false
-                    val popUpFiturFragment = PopUpFiturSedangDikembankanFragment()
-                    popUpFiturFragment.show(getSupportFragmentManager(), "popupfitur")
+                    val currentFragmentId = navController.currentBackStackEntry?.destination?.id
+                    sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+                    var token = sharedPreferences.getString("token", "")
+                    Log.i("token", "$token")
+                    if (token!!.isNotEmpty()) {
+                        navController.navigate(R.id.fragmentListKuis)
+                        true
+                    }else{
+                        if(currentFragmentId!! == R.id.homeFragment) {
+                            val popUpFragment = PopUpAkunFragment()
+                            popUpFragment.show(getSupportFragmentManager(), "popupfragment")
+                            false
+                        }else if(currentFragmentId!! == R.id.pelajaranFragment){
+                            val popUpFragment = PopUpPelajaranFragment()
+                            popUpFragment.show(getSupportFragmentManager(), "popupfragment")
+                            false
+                        }
+                    }
                 }
                 else -> false
             }

@@ -112,7 +112,7 @@ class FragmentSoalLatihanAudio : Fragment() {
         }
 
         binding.txtPenjelasan.text = ""
-        binding.textJudul.text = sharedPrefs.getString("latihanAudio", "")
+        binding.textJudul.text = sharedPrefs.getString("judulLatihanTampil", "")
 
         val optionImageViews = listOf(binding.txtJawaban1, binding.txtJawaban2, binding.txtJawaban3, binding.txtJawaban4)
         val optionUrls = listOf(soal.opsi_a, soal.opsi_b, soal.opsi_c, soal.opsi_d)
