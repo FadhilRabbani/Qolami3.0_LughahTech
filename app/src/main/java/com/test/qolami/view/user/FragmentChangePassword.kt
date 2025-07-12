@@ -53,7 +53,7 @@ class FragmentChangePassword : Fragment() {
                 Toast.makeText(requireContext(), "Password tidak cocok", Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.resetPassword(email, otp, password, repassword)
-                binding.pbLoading.visibility = View.VISIBLE
+                binding.loadingContainer.visibility = View.VISIBLE
             }
         }
 
@@ -62,7 +62,7 @@ class FragmentChangePassword : Fragment() {
 
     private fun observeViewModel() {
         viewModel.message.observe(viewLifecycleOwner) {
-            binding.pbLoading.visibility = View.GONE
+            binding.loadingContainer.visibility = View.GONE
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
             if (it == "Password berhasil diubah.") {
                 when (sourceFragment) {
@@ -74,7 +74,7 @@ class FragmentChangePassword : Fragment() {
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
-            binding.pbLoading.visibility = View.GONE
+            binding.loadingContainer.visibility = View.GONE
             Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_LONG).show()
         }
     }

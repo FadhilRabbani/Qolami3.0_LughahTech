@@ -19,7 +19,8 @@ class ResetPasswordViewModel @Inject constructor(
 
     val message = MutableLiveData<String>()
     val error = MutableLiveData<String>()
-    val isLoading = MutableLiveData<Boolean>()
+    val isLoading: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply { value = false }
+
 
     fun sendOtp(email: String) {
         viewModelScope.launch {

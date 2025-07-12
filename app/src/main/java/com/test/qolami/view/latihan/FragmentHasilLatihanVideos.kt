@@ -37,15 +37,17 @@ class FragmentHasilLatihanVideos : Fragment() {
         binding.nilaiSalah.text = jumlahSalah.toString()
 
         val sharedPref = requireContext().getSharedPreferences("judul", Context.MODE_PRIVATE)
-        val judul = sharedPref.getString("judulLatihanTampil", "") ?: ""
-        Log.d("DEBUG_HASIL", "Judul di SharedPref = $judul")
         binding.btnLanjutkan.setOnClickListener {
+            val judul = sharedPref.getString("judulLatihanTampil", "") ?: ""
+
+            val navController = findNavController()
+
+            navController.popBackStack(R.id.fragmentLatihan, false)
+
             if (judul.contains("Kata", ignoreCase = true)) {
-                // Kembali ke detail latihan kata
-                findNavController().navigate(R.id.action_fragmentHasilLatihanVideos_to_fragmentLatihanKata)
+                navController.navigate(R.id.fragmentLatihanKata)
             } else {
-                // Kembali ke detail latihan huruf
-                findNavController().navigate(R.id.action_fragmentHasilLatihanVideos_to_fragmentLatihanHuruf)
+                navController.navigate(R.id.fragmentLatihanHuruf)
             }
         }
     }

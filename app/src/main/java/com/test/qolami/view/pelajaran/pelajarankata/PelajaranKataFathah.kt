@@ -47,6 +47,9 @@ class PelajaranKataFathah : Fragment() {
                 }
             }
         })
+        binding.backImg.setOnClickListener{
+            findNavController().navigate(R.id.action_fathah_pelajaran_kata)
+        }
         binding.nextBtnKata.setOnClickListener {
             findNavController().navigate(R.id.action_fathah_to_kasrah)
         }

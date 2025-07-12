@@ -238,13 +238,14 @@
         <action
             android:id="@+id/action_fragmentHasilLatihanVideos_to_fragmentLatihanHuruf"
             app:destination="@id/fragmentLatihanHuruf"
-            app:popUpTo="@id/fragmentHasilLatihanVideos"
+            app:popUpTo="@id/fragmentDetailLatihanHuruf"
             app:popUpToInclusive="true"
             app:launchSingleTop="true"/>
+
         <action
             android:id="@+id/action_fragmentHasilLatihanVideos_to_fragmentLatihanKata"
-            app:destination="@+id/fragmentLatihanKata"
-            app:popUpTo="@id/fragmentHasilLatihanVideos"
+            app:destination="@id/fragmentLatihanKata"
+            app:popUpTo="@id/fragmentDetailLatihanKata"
             app:popUpToInclusive="true"
             app:launchSingleTop="true"/>
     </fragment>
@@ -332,6 +333,11 @@
             app:destination="@+id/fragmentDhammah"
             app:popUpTo="@id/fragmentPelajaranKata"
             app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_fathah_pelajaran_kata"
+            app:destination="@+id/fragmentPelajaranKata"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
     </fragment>
     <fragment
         android:id="@+id/fragmentKataKasrah"
@@ -348,6 +354,11 @@
             app:destination="@+id/fragmentDhammah"
             app:popUpTo="@id/fragmentPelajaranKata"
             app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_kasrah_to_pelajara_kata"
+            app:destination="@+id/fragmentPelajaranKata"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
     </fragment>
     <fragment
         android:id="@+id/fragmentDhammah"
@@ -362,6 +373,11 @@
         <action
             android:id="@+id/action_dhammah_to_kasrah"
             app:destination="@+id/fragmentKataKasrah"
+            app:popUpTo="@id/fragmentPelajaranKata"
+            app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_dhammah_to_pelajaran_kata"
+            app:destination="@+id/fragmentPelajaranKata"
             app:popUpTo="@id/fragmentPelajaranKata"
             app:popUpToInclusive="false"/>
     </fragment>

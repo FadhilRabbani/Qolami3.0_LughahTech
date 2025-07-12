@@ -32,18 +32,20 @@ class FragmentHasilLatihanAudio : Fragment() {
         binding.nilaiBenar.text = jumlahBenar.toString()
         binding.nilaiSalah.text = jumlahSalah.toString()
 
-        // 🔁 Ambil shared preferences untuk menentukan apakah latihan ini "kata" atau "huruf"
         val sharedPrefs = requireContext().getSharedPreferences("judul", Context.MODE_PRIVATE)
-        val isKata = sharedPrefs.getBoolean("isKata", false) // ← Tambahan baru
+        val isKata = sharedPrefs.getBoolean("isKata", false)
 
         binding.btnLanjutkan.setOnClickListener {
+            val navController = findNavController()
+
+            navController.popBackStack(R.id.fragmentLatihan, false)
+
             if (isKata) {
-                // 👉 Jika latihan kata, navigasi ke fragment detail kata
-                findNavController().navigate(R.id.action_fragmentHasilLatihanAudio_to_fragmentLatihanKata)
+                navController.navigate(R.id.fragmentLatihanKata)
             } else {
-                // 👉 Jika latihan huruf, navigasi ke fragment detail huruf
-                findNavController().navigate(R.id.action_fragmentHasilLatihanAudio_to_fragmentLatihanHuruf)
+                navController.navigate(R.id.fragmentLatihanHuruf)
             }
         }
+
     }
 }

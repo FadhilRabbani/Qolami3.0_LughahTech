@@ -49,6 +49,9 @@ class PelajaranKataDhammah : Fragment() {
                 }
             }
         })
+        binding.backImg.setOnClickListener{
+            findNavController().navigate(R.id.action_dhammah_to_pelajaran_kata)
+        }
         binding.prevBtnKata.setOnClickListener {
             findNavController().navigate(R.id.action_dhammah_to_kasrah)
         }

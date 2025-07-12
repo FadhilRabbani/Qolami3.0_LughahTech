@@ -81,11 +81,16 @@ class FragmentSoalLatihanAudio : Fragment() {
 
             if (isPlaying) {
                 player?.pause()
+                player?.seekTo(0)
                 isPlaying = false
+                audioEnded = false
+                binding.playAudio?.setImageResource(R.drawable.ic_play_button)
             } else {
-                if (audioEnded) player?.seekTo(0)
+                player?.seekTo(0)
                 player?.play()
                 isPlaying = true
+                audioEnded = false
+                binding.playAudio?.setImageResource(R.drawable.ic_pause_button)
             }
         }
     }
@@ -99,13 +104,16 @@ class FragmentSoalLatihanAudio : Fragment() {
             val mediaItem = MediaItem.fromUri(Uri.parse(soal.media_url))
             exoPlayer.setMediaItem(mediaItem)
             exoPlayer.prepare()
-            exoPlayer.playWhenReady = false
+            exoPlayer.playWhenReady = true
+            isPlaying = true
             audioEnded = false
+            binding.playAudio?.setImageResource(R.drawable.ic_pause_button)
             exoPlayer.addListener(object : Player.Listener {
                 override fun onPlaybackStateChanged(state: Int) {
                     if (state == Player.STATE_ENDED) {
                         isPlaying = false
                         audioEnded = true
+                        binding.playAudio?.setImageResource(R.drawable.ic_play_button)
                     }
                 }
             })
@@ -156,6 +164,7 @@ class FragmentSoalLatihanAudio : Fragment() {
     private fun releasePlayer() {
         player?.release()
         player = null
+        isPlaying = false
     }
 
     override fun onDestroyView() {
