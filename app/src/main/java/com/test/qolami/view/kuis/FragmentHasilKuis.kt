@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
+import com.test.qolami.view.common.LoadingDialogFragment
 
 @AndroidEntryPoint
 class FragmentHasilKuis : Fragment() {
@@ -28,6 +29,8 @@ class FragmentHasilKuis : Fragment() {
     private var userId: Int = 0
     private var kuisId: Int = 0
     private var jawabanUser: List<JawabanRequest.JawabanItem> = emptyList()
+    private var loadingDialog: LoadingDialogFragment? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,14 +67,14 @@ class FragmentHasilKuis : Fragment() {
     }
 
     private fun submitJawaban() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Tampilkan dialog loading
+            loadingDialog = LoadingDialogFragment.newInstance("Menilai jawaban...")
+            loadingDialog?.show(parentFragmentManager, "loading")
+
             try {
                 val response = retrofitClient.apiService.submitJawabanKuis(
-                    JawabanRequest(
-                        user_id = userId,
-                        kuis_id = kuisId,
-                        jawaban = jawabanUser
-                    )
+                    JawabanRequest(user_id = userId, kuis_id = kuisId, jawaban = jawabanUser)
                 )
 
                 if (response.isSuccessful) {
@@ -79,23 +82,23 @@ class FragmentHasilKuis : Fragment() {
                     hasil?.let {
                         val benar = it.jumlah_benar
                         val salah = jawabanUser.size - benar
-                        android.util.Log.d("HASIL_KUIS", "Benar: $benar, Salah: $salah, Bintang: ${it.bintang}")
                         binding.nilaiBenar.text = benar.toString()
                         binding.nilaiSalah.text = salah.toString()
                         tampilkanBintang(it.bintang)
                     }
                 } else {
                     val errorBody = response.errorBody()?.string()
-                    // ✅ Log dan tampilkan isi error response
-                    android.util.Log.e("SUBMIT_ERROR", "Code: ${response.code()}, Error: $errorBody")
                     Toast.makeText(requireContext(), "Gagal submit\n$errorBody", Toast.LENGTH_LONG).show()
                 }
-
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.message}", Toast.LENGTH_LONG).show()
+            } finally {
+                // Tutup dialog loading
+                loadingDialog?.dismiss()
             }
         }
     }
+
 
     private fun animasiPop(view: View) {
         val scale = ScaleAnimation(

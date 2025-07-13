@@ -32,15 +32,15 @@ class FragmentHasilLatihanAudio : Fragment() {
         binding.nilaiBenar.text = jumlahBenar.toString()
         binding.nilaiSalah.text = jumlahSalah.toString()
 
-        val sharedPrefs = requireContext().getSharedPreferences("judul", Context.MODE_PRIVATE)
-        val isKata = sharedPrefs.getBoolean("isKata", false)
 
+        val sharedPref = requireContext().getSharedPreferences("judul", Context.MODE_PRIVATE)
         binding.btnLanjutkan.setOnClickListener {
+            val judul = sharedPref.getString("judulLatihanTampil", "") ?: ""
             val navController = findNavController()
 
             navController.popBackStack(R.id.fragmentLatihan, false)
 
-            if (isKata) {
+            if (judul.contains("Kata", ignoreCase = true)) {
                 navController.navigate(R.id.fragmentLatihanKata)
             } else {
                 navController.navigate(R.id.fragmentLatihanHuruf)

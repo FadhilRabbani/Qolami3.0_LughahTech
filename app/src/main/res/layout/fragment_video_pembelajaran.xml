@@ -160,14 +160,17 @@
 
         <TextView
             android:id="@+id/detail"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:fontFamily="@font/montserrat_regular"
             android:text="Warna Hitam merupakan \nhuruf Ba dan yang berwarna \nbiru terang adalah harakat \nFathah."
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="@dimen/_9ssp"
+            android:maxLines="5"
+            android:ellipsize="end"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_penjelasan"></TextView>
+            app:layout_constraintTop_toBottomOf="@+id/text_penjelasan" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -157,8 +157,8 @@
                     android:id="@+id/frameLayout"
                     android:layout_width="@dimen/_110sdp"
                     android:layout_height="@dimen/_110sdp"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="@dimen/_24sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
                     android:background="@drawable/shape_bg_pelajaran_video"
                     app:layout_constraintStart_toEndOf="@+id/detail"
                     app:layout_constraintTop_toBottomOf="@+id/text_penjelasan">
@@ -177,11 +177,12 @@
                     android:id="@+id/detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_26sdp"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="Warna Hitam merupakan \n huruf Ha, Sin,dan Ba yang di \nrangkai dan yang berwarna \nbiru terang adalah harakat \nFathah, dan yang berwarna \nhijau adalah harakat kasrah"
+                    android:text="Warna Hitam merupakan \nhuruf Mim, Lam, dan Kam yang di \nrangkai dan yang berwarna \nbiru terang adalah harakat \nFathah."
                     android:textColor="@color/black"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/_8ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_penjelasan"></TextView>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,6 +59,7 @@ class VideoPembelajaranFragment : Fragment() {
         exoPlayer = ExoPlayer.Builder(requireContext()).build()
         pelajaranHurufViewModel = ViewModelProvider(this).get(PelajaranHurufViewModel::class.java)
         youTubePlayerView = binding.ytPlayer
+        lifecycle.addObserver(youTubePlayerView)
         val getJudul = this.arguments?.get("judul")
         binding.textPelajaran.text = getJudul.toString()
         when (binding.textPelajaran.text.toString()) {
@@ -92,6 +93,12 @@ class VideoPembelajaranFragment : Fragment() {
         super.onPause()
         youTubePlayer?.pause()
     }
+    override fun onStop() {
+        super.onStop()
+        youTubePlayer?.seekTo(0f)
+        youTubePlayer?.pause()
+    }
+
 
     private fun PelajaranFathah() {
         val getId2 = this.arguments?.get("id2")
@@ -104,18 +111,9 @@ class VideoPembelajaranFragment : Fragment() {
                     AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
                         youTubePlayer = player
-                        player.cueVideo(data2[i].idYoutube, 0f)
+                        player.loadVideo(data2[i].idYoutube, 0f)
                     }
 
-                    override fun onStateChange(
-                        youTubePlayer: YouTubePlayer,
-                        state: PlayerConstants.PlayerState
-                    ) {
-                        if (state == PlayerConstants.PlayerState.ENDED){
-                            youTubePlayer.seekTo(0f)
-                            youTubePlayer.play()
-                        }
-                    }
                 })
                 binding.detail.text = data2[i].detail
                 Glide.with(this).load(data2[i].gambar).into(binding.gambarPelajaran)
@@ -135,18 +133,10 @@ class VideoPembelajaranFragment : Fragment() {
                     AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
                         youTubePlayer = player
-                        player.cueVideo(data3[i].idYoutube, 0f)
+                        player.loadVideo(data3[i].idYoutube, 0f)
                     }
 
-                    override fun onStateChange(
-                        youTubePlayer: YouTubePlayer,
-                        state: PlayerConstants.PlayerState
-                    )
-                    {
-                        if (state == PlayerConstants.PlayerState.ENDED)
-                            youTubePlayer.seekTo(0f)
-                        youTubePlayer.play()
-                    }
+
                 })
                 binding.detail.text = data3[i].detail
                 Glide.with(this).load(data3[i].gambar).into(binding.gambarPelajaran)
@@ -166,16 +156,7 @@ class VideoPembelajaranFragment : Fragment() {
                     AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
                         youTubePlayer = player
-                        player.cueVideo(data4[i].idYoutube, 0f)
-                    }
-
-                    override fun onStateChange(
-                        youTubePlayer: YouTubePlayer,
-                        state: PlayerConstants.PlayerState
-                    ) {
-                        if (state == PlayerConstants.PlayerState.ENDED)
-                            youTubePlayer.seekTo(0f)
-                        youTubePlayer.play()
+                        player.loadVideo(data4[i].idYoutube, 0f)
                     }
                 })
                 binding.detail.text = data4[i].detail
@@ -195,16 +176,7 @@ class VideoPembelajaranFragment : Fragment() {
                     AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
                         youTubePlayer = player
-                        player.cueVideo(data5[i].idYoutube, 0f)
-                    }
-
-                    override fun onStateChange(
-                        youTubePlayer: YouTubePlayer,
-                        state: PlayerConstants.PlayerState
-                    ) {
-                        if (state == PlayerConstants.PlayerState.ENDED)
-                            youTubePlayer.seekTo(0f)
-                        youTubePlayer.play()
+                        player.loadVideo(data5[i].idYoutube, 0f)
                     }
                 })
                 binding.detail.text = data5[i].detail
@@ -224,16 +196,7 @@ class VideoPembelajaranFragment : Fragment() {
                     AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
                         youTubePlayer = player
-                        player.cueVideo(data6[i].idYoutube, 0f)
-                    }
-
-                    override fun onStateChange(
-                        youTubePlayer: YouTubePlayer,
-                        state: PlayerConstants.PlayerState
-                    ) {
-                        if (state == PlayerConstants.PlayerState.ENDED)
-                            youTubePlayer.seekTo(0f)
-                        youTubePlayer.play()
+                        player.loadVideo(data6[i].idYoutube, 0f)
                     }
                 })
                 binding.detail.text = data6[i].detail
@@ -252,16 +215,7 @@ class VideoPembelajaranFragment : Fragment() {
                     AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
                         youTubePlayer = player
-                        player.cueVideo(data7[i].idYoutube, 0f)
-                    }
-
-                    override fun onStateChange(
-                        youTubePlayer: YouTubePlayer,
-                        state: PlayerConstants.PlayerState
-                    ) {
-                        if (state == PlayerConstants.PlayerState.ENDED)
-                            youTubePlayer.seekTo(0f)
-                        youTubePlayer.play()
+                        player.loadVideo(data7[i].idYoutube, 0f)
                     }
                 })
                 binding.detail.text = data7[i].detail

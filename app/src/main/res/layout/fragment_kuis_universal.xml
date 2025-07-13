@@ -30,7 +30,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Latihan"
+            android:text="Kuis"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -79,37 +79,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
+
     <LinearLayout
         android:id="@+id/videoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_10sdp"
         android:visibility="gone"
-        android:layout_marginTop="@dimen/_20sdp"
-        app:layout_constraintTop_toBottomOf="@id/txt_penjelasan"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toTopOf="@+id/txtSoal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/txt_penjelasan">
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/yt_player"
             android:layout_width="match_parent"
             android:layout_height="183dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="20dp" />
     </LinearLayout>
 
-    <!-- Layout Audio -->
     <LinearLayout
         android:id="@+id/audioLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_10sdp"
         android:visibility="gone"
-        android:layout_marginTop="@dimen/_20sdp"
-        app:layout_constraintTop_toBottomOf="@id/txt_penjelasan"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/txtSoal"
         app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center_horizontal">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_penjelasan"
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageView
             android:id="@+id/btn_play_audio"
@@ -118,13 +124,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/ring_audio"
             android:padding="@dimen/_25sdp"
-            android:src="@drawable/baseline_volume_up_24_audio"/>
+            android:src="@drawable/baseline_volume_up_24_audio" />
     </LinearLayout>
-
-
-    <!-- Pilihan Jawaban -->
-
-    <!-- Tombol Next -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
@@ -132,10 +133,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.card.MaterialCardView
@@ -245,16 +246,16 @@
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_230sdp"
         android:layout_height="10dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginEnd="@dimen/_60sdp"
+        android:layout_marginTop="20dp"
         android:max="20"
         android:progress="20"
         android:progressDrawable="@drawable/progress_green"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <TextView
         android:id="@+id/txtCountdown"

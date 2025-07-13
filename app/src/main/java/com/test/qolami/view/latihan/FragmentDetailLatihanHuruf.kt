@@ -94,7 +94,12 @@ class FragmentDetailLatihanHuruf : Fragment() {
                 judulLatihanAudio != null -> sharedPreferences.edit()
                     .putString("latihanAudio", judulLatihanAudio).apply()
             }
-            findNavController().navigate(R.id.action_fragmentDetailLatihanHuruf_to_fragmentSoalLatihanAudio)
+            val bundle = Bundle().apply {
+                putInt("latihanId", latihanId)
+                putString("judulLatihanTampil", judulTampil)
+            }
+            findNavController().navigate(R.id.action_fragmentDetailLatihanHuruf_to_fragmentSoalLatihanAudio, bundle)
+
         }
     }
 
